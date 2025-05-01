@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 
 public class LoreUtilsClient implements ClientModInitializer {
+
     @Override
     public void onInitializeClient() {
         Box testBox = new Box(0, 70, 0, 10, 100, 10);
@@ -20,21 +21,21 @@ public class LoreUtilsClient implements ClientModInitializer {
         EspRender.init();
 
         boolean[][] lightStates = new boolean[][] {
-                {true, false, true, false, true, false, true},
-                {true, false, true, false, true, false, false},
-                {true, false, false, true, true, true, true},
-                {false, false, true, true, false, false, true},
-                {true, false, true, false, true, true, true},
-                {true, true, false, true, true, false, true},
-                {true, true, true, true, true, false, true}
+                {false, false, false, false, false, false, false},
+                {false, false, false, false, false, false, false},
+                {false, false, false, false, false, false, false},
+                {false, false, false, false, false, false, false},
+                {false, false, false, false, false, false, false},
+                {false, false, false, false, false, false, false},
+                {false, false, false, false, false, false, false}
         };
 
         PuzzleSolver.Tile[][] grid = PuzzleInput.createGridFromLights(lightStates);
 
-        System.out.println("Teste Lösung für alle Lichter AN:");
+        System.out.println("Lights On:");
         System.out.println(PuzzleSolver.solveAllOnOptimized(grid));
 
-        System.out.println("Teste Lösung für alle Lichter AUS:");
+        System.out.println("Lights Out:");
         System.out.println(PuzzleSolver.solveAllOffOptimized(grid));
     }
 }

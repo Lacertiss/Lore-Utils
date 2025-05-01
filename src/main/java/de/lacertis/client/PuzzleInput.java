@@ -3,13 +3,13 @@ package de.lacertis.client;
 public class PuzzleInput {
 
     private static final boolean[][] triggerLayout = {
-            {false, true,  false, true,  false, true,  false},
-            {true,  true,  true,  true,  true,  true,  true },
-            {false, true,  true,  true,  true,  false,  false},
-            {true,  true,  true,  true,  true,  true,  true },
-            {false, false, true,  true,  true,  true,  false},
-            {true,  true,  true,  true,  true,  true,  true },
-            {false, true,  false, true,  false, true,  false}
+            {false, true, false, true, false, true, false},
+            {true, true, true, true, true, true, true},
+            {false, true, true, true, true, false, false},
+            {true, true, true, true, true, true, true},
+            {false, false, true, true, true, true, false},
+            {true, true, true, true, true, true, true},
+            {false, true, false, true, false, true, false}
     };
 
     public static PuzzleSolver.Tile[][] createGridFromLights(boolean[][] lightStates) {
