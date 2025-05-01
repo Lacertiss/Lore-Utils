@@ -5,7 +5,7 @@ public class PuzzleInput {
     private static final boolean[][] triggerLayout = {
             {false, true,  false, true,  false, true,  false},
             {true,  true,  true,  true,  true,  true,  true },
-            {false, true,  true,  true,  true,  true,  false},
+            {false, true,  true,  true,  true,  false,  false},
             {true,  true,  true,  true,  true,  true,  true },
             {false, false, true,  true,  true,  true,  false},
             {true,  true,  true,  true,  true,  true,  true },

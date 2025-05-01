@@ -30,6 +30,10 @@ public class PuzzleSolver {
         int[] b = new int[size];
         for (int i = 0; i < size; i++) {
             int x = i / 7, y = i % 7;
+            if (!grid[x][y].isTrigger) {
+                b[i] = 0;
+                continue;
+            }
             b[i] = grid[x][y].isLit ? 0 : 1;
             setMatrixRow(matrix, i, x, y);
         }
@@ -38,7 +42,9 @@ public class PuzzleSolver {
         for (int i = 0; i < size; i++) {
             if (solution[i] == 1) {
                 int x = i / 7, y = i % 7;
-                path.add(new Point(x, y));
+                if (grid[x][y].isTrigger) {
+                    path.add(new Point(x, y));
+                }
             }
         }
         return path;
@@ -120,13 +126,13 @@ public class PuzzleSolver {
 
     public static void main(String[] args) {
         boolean[][] lightStates = {
-                {false,false,false,false,false,false,false},
-                {true,true,true,true,true,true,true},
+                {false,true,false,true,false,true,false},
                 {false,true,true,true,true,true,false},
-                {true,true,true,false,true,true,true},
-                {false,false,true,true,false,true,false},
-                {true,true,true,true,true,true,true},
-                {false,true,false,true,false,true,false}
+                {false,false,true,false,true,false,false},
+                {false,false,true,false,false,false,false},
+                {false,false,false,true,true,true,false},
+                {true,false,false,false,true,false,true},
+                {false,false,false,true,false,false,false}
         };
         Tile[][] grid = PuzzleInput.createGridFromLights(lightStates);
         System.out.println("L\u00f6sung AN (Optimized): " + solveAllOnOptimized(grid));
