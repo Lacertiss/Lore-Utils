@@ -3,13 +3,12 @@
 	"id": "loreutils",
 	"version": "${version}",
 	"name": "Lore Utils",
-	"description": "Life quality improvements for PVPLegacy",
+	"description": "Life quality improvements for PVPLegacy Lore",
 	"authors": [
 		"Lacertis"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/Lacertiss/Lore-Utils"
 	},
 	"license": "MIT",
 	"icon": "assets/loreutils/icon.png",
