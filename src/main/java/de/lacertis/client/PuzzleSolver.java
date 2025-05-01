@@ -60,7 +60,6 @@ public class PuzzleSolver {
         for (int i = 0; i < N; i++) {
             BitSet row = new BitSet(N);
             Pos p = triggers.get(i);
-            // Toggle-Effekt: Self + Nachbarn
             for (int j = 0; j < N; j++) {
                 Pos q = triggers.get(j);
                 if ((Math.abs(p.x() - q.x()) + Math.abs(p.y() - q.y())) == 0 ||
