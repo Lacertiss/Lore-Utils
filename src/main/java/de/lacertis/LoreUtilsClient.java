@@ -1,9 +1,6 @@
 package de.lacertis;
 
-import de.lacertis.client.AreaChecker;
-import de.lacertis.client.EspRender;
-import de.lacertis.client.PuzzleInput;
-import de.lacertis.client.PuzzleSolver;
+import de.lacertis.client.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +23,8 @@ public class LoreUtilsClient implements ClientModInitializer {
                 AreaChecker.init();
             }
         });
+        LineRender lineRender = new LineRender();
+        lineRender.init();
 
         //AreaChecker.addArea(testBox);
         //EspRender.registerPosition(new BlockPos(100, 64, 100));
