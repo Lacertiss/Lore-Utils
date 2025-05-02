@@ -18,6 +18,7 @@ public class LoreUtilsClient implements ClientModInitializer {
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             String serverAddress = handler.getConnection().getAddress().toString();
             if (serverAddress.contains("pvplegacy.net")) {
+                System.out.println("Detected connection to PvP Legacy server.");
                 EspRender.init();
                 AreaChecker.init();
             } else {
@@ -29,7 +30,7 @@ public class LoreUtilsClient implements ClientModInitializer {
         //AreaChecker.addArea(testBox);
         //EspRender.registerPosition(new BlockPos(100, 64, 100));
 
-
+        /*
         boolean[][] lightStates = new boolean[][] {
                 {false, false, false, false, false, false, false},
                 {false, false, false, false, false, false, false},
@@ -47,5 +48,6 @@ public class LoreUtilsClient implements ClientModInitializer {
 
         System.out.println("Lights Out:");
         System.out.println(PuzzleSolver.solveAllOffOptimized(grid));
+        */
     }
 }
