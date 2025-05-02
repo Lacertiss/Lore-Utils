@@ -1,3 +1,4 @@
+// Datei: src/main/java/de/lacertis/client/EspRender.java
 package de.lacertis.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class EspRender {
     private static final List<BlockPos> highlightPositions = new ArrayList<>();
+    private static boolean initialized = false;
 
     public static void registerPosition(BlockPos pos) {
         highlightPositions.add(pos);
@@ -24,6 +26,7 @@ public class EspRender {
     }
 
     public static void init() {
+        if (initialized) return;
         WorldRenderEvents.AFTER_ENTITIES.register(ctx -> {
             MinecraftClient client = MinecraftClient.getInstance();
             if (client.player == null || client.world == null) return;
@@ -50,5 +53,11 @@ public class EspRender {
             matrices.pop();
             RenderSystem.enableDepthTest();
         });
+        initialized = true;
+    }
+
+    public static void uninit() {
+        highlightPositions.clear();
+        initialized = false;
     }
 }
