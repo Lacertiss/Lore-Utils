@@ -1,6 +1,6 @@
 package de.lacertis.client;
 
-public enum Coordinates {
+public enum LightsOutCoords {
     LIGHTS_OUT_COORD_1(-11258.5, 35, 12683.5),
     LIGHTS_OUT_COORD_2(-11258.5, 35, 12669.5),
     LIGHTS_OUT_COORD_3(-11258.5, 35, 12655.5),
@@ -44,12 +44,11 @@ public enum Coordinates {
     LIGHTS_OUT_COORD_35(-11216.5, 35, 12655.5);
 
 
-
     private final double x;
     private final double y;
     private final double z;
 
-    Coordinates(double x, double y, double z) {
+    LightsOutCoords(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;

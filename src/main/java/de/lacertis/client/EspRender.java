@@ -43,7 +43,7 @@ public class EspRender {
             matrices.push();
             matrices.translate(-camX, -camY, -camZ);
 
-            float r = 1.0f, g = 0.0f, b = 0.0f, a = 0.8f;
+            float r = 0.68f, g = 0.85f, b = 0.90f, a = 0.8f;
             double expand = 0.002;
             for (BlockPos pos : highlightPositions) {
                 Box box = new Box(pos).expand(expand, expand, expand);

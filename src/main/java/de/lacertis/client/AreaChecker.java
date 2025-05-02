@@ -7,21 +7,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AreaChecker {
-    private static final List<Box> AREAS = new ArrayList<>();
+    private static final List<AreaEntry> AREAS = new ArrayList<>();
     private static boolean initialized = false;
 
-    public static void addArea(Box area) {
-        AREAS.add(area);
+    public static void addArea(Box area, PlayerArea areaType) {
+        AREAS.add(new AreaEntry(area, areaType));
+    }
+
+    private static class AreaEntry {
+        Box area;
+        PlayerArea areaType;
+
+        AreaEntry(Box area, PlayerArea areaType) {
+            this.area = area;
+            this.areaType = areaType;
+        }
     }
 
     public static void init() {
-        if (initialized) return;
+        if (initialized)
+            return;
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.world != null && client.player != null) {
                 Vec3d playerPos = client.player.getPos();
-                for (Box area : AREAS) {
-                    if (area.contains(playerPos)) {
-                        System.out.println("Player is in area: " + area);
+                for (AreaEntry entry : AREAS) {
+                    boolean contains = entry.area.contains(playerPos);
+                    entry.areaType.setActive(contains);
+                    if (contains) {
+                        System.out.println("Player ist in Area: " + entry.area);
                     }
                 }
             }
