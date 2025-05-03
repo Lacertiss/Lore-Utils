@@ -9,7 +9,6 @@ public class PuzzleSolver {
     public static class Tile {
         public boolean isTrigger;
         public boolean isLit;
-
         public Tile(boolean isTrigger, boolean isLit) {
             this.isTrigger = isTrigger;
             this.isLit = isLit;
@@ -23,7 +22,7 @@ public class PuzzleSolver {
     }
 
     public static void toggleNeighbors(Tile[][] grid, int x, int y) {
-        int[][] dirs = {{0,0}, {-1,0}, {1,0}, {0,-1}, {0,1}};
+        int[][] dirs = { {0,0}, {-1,0}, {1,0}, {0,-1}, {0,1} };
         for (int[] d : dirs) {
             toggleIfExists(grid, x + d[0], y + d[1]);
         }
@@ -40,7 +39,7 @@ public class PuzzleSolver {
         return copy;
     }
 
-    public static List<Pos> solveWithGaussian(Tile[][] grid, boolean targetOn) {
+    public static List<Pos> solveFullGrid(Tile[][] grid, boolean targetOn) {
         List<Pos> triggers = new ArrayList<>();
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
@@ -50,33 +49,29 @@ public class PuzzleSolver {
             }
         }
         int N = triggers.size();
-        Map<Pos, Integer> indexOf = new HashMap<>();
-        for (int i = 0; i < N; i++) {
-            indexOf.put(triggers.get(i), i);
-        }
 
-        List<BitSet> A = new ArrayList<>(N);
-        boolean[] b = new boolean[N];
-        for (int i = 0; i < N; i++) {
-            BitSet row = new BitSet(N);
-            Pos p = triggers.get(i);
+        List<BitSet> A = new ArrayList<>(49);
+        boolean[] b = new boolean[49];
+        for (int i = 0; i < 49; i++) {
+            int row = i / 7;
+            int col = i % 7;
+            BitSet rowBits = new BitSet(N);
             for (int j = 0; j < N; j++) {
-                Pos q = triggers.get(j);
-                if ((Math.abs(p.x() - q.x()) + Math.abs(p.y() - q.y())) == 0 ||
-                        (Math.abs(p.x() - q.x()) + Math.abs(p.y() - q.y())) == 1) {
-                    row.set(j);
+                Pos t = triggers.get(j);
+                if (Math.abs(t.x() - row) + Math.abs(t.y() - col) <= 1) {
+                    rowBits.set(j);
                 }
             }
-            A.add(row);
-            b[i] = grid[p.x()][p.y()].isLit ^ targetOn;
+            A.add(rowBits);
+            b[i] = grid[row][col].isLit ^ targetOn;
         }
 
-        int r = 0;
-        int[] pivotCol = new int[N];
+        int[] pivotCol = new int[49];
         Arrays.fill(pivotCol, -1);
-        for (int c = 0; c < N && r < N; c++) {
+        int r = 0;
+        for (int c = 0; c < N && r < 49; c++) {
             int sel = -1;
-            for (int i = r; i < N; i++) {
+            for (int i = r; i < 49; i++) {
                 if (A.get(i).get(c)) {
                     sel = i;
                     break;
@@ -88,7 +83,7 @@ public class PuzzleSolver {
             b[r] = b[sel];
             b[sel] = tmp;
             pivotCol[r] = c;
-            for (int i = 0; i < N; i++) {
+            for (int i = 0; i < 49; i++) {
                 if (i != r && A.get(i).get(c)) {
                     A.get(i).xor(A.get(r));
                     b[i] ^= b[r];
@@ -97,7 +92,11 @@ public class PuzzleSolver {
             r++;
         }
 
-        for (int i = r; i < N; i++) {
+        for (int i = r; i < 49; i++) {
+            int row = i / 7, col = i % 7;
+            if (!grid[row][col].isTrigger) {
+                continue;
+            }
             if (A.get(i).isEmpty() && b[i]) {
                 return new ArrayList<>();
             }
@@ -125,66 +124,11 @@ public class PuzzleSolver {
         return result;
     }
 
-    public static List<Pos> solveWithFallback(Tile[][] grid, boolean targetOn) {
-        List<Pos> baseSolution = solveWithGaussian(grid, targetOn);
-        if (!baseSolution.isEmpty()) {
-            return baseSolution;
-        }
-
-        List<Pos> bestSolution = new ArrayList<>();
-        int maxRandomToggles = 4;
-        List<Pos> triggers = new ArrayList<>();
-        for (int x = 0; x < 7; x++) {
-            for (int y = 0; y < 7; y++) {
-                if (grid[x][y].isTrigger) {
-                    triggers.add(new Pos(x, y));
-                }
-            }
-        }
-        Random rand = new Random();
-        for (int attempt = 1; attempt <= maxRandomToggles; attempt++) {
-            List<Pos> toggled = new ArrayList<>();
-            Tile[][] copy = deepCopyGrid(grid);
-            for (int i = 0; i < attempt; i++) {
-                Pos p = triggers.get(rand.nextInt(triggers.size()));
-                toggleNeighbors(copy, p.x(), p.y());
-                toggled.add(p);
-            }
-            List<Pos> solution = solveWithGaussian(copy, targetOn);
-            if (!solution.isEmpty()) {
-                bestSolution.addAll(toggled);
-                bestSolution.addAll(solution);
-                break;
-            }
-        }
-        return bestSolution;
-    }
-
     public static List<Pos> solveAllOnOptimized(Tile[][] grid) {
-        return solveWithFallback(grid, true);
+        return solveFullGrid(grid, true);
     }
 
     public static List<Pos> solveAllOffOptimized(Tile[][] grid) {
-        return solveWithFallback(grid, false);
-    }
-
-    // For debugging purposes
-
-    private static void printPuzzle(Tile[][] grid) {
-        for (int x = 0; x < 7; x++) {
-            StringBuilder sb = new StringBuilder();
-            for (int y = 0; y < 7; y++) {
-                sb.append(grid[x][y].isLit ? "1" : "0");
-            }
-            System.out.println(sb.toString());
-        }
-    }
-
-    public static void simulateSolution(Tile[][] grid, List<Pos> solution) {
-        printPuzzle(grid);
-        for (Pos move : solution) {
-            toggleNeighbors(grid, move.x(), move.y());
-            printPuzzle(grid);
-        }
+        return solveFullGrid(grid, false);
     }
 }

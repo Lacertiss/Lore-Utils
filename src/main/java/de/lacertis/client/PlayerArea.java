@@ -2,6 +2,7 @@ package de.lacertis.client;
 
 public enum PlayerArea {
     NONE,
+    LIGHTS_OUT,
     SPIRIT_MAZE_1;
 
     private boolean active;

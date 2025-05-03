@@ -3,19 +3,20 @@ package de.lacertis;
 import de.lacertis.client.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 
 public class LoreUtilsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        Box testBox = new Box(0, 70, 0, 10, 100, 10);;
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             String serverAddress = handler.getConnection().getAddress().toString();
             if (serverAddress.contains("pvplegacy.net")) {
                 System.out.println("Detected connection to PvP Legacy server.");
+
+                AreaChecker.addArea(new Box(-11213, 35, 12646.5, -11261, 60, 12692), PlayerArea.LIGHTS_OUT);
+
                 EspRender.init();
                 AreaChecker.init();
             } else {

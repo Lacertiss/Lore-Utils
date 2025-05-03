@@ -25,6 +25,10 @@ public class EspRender {
         highlightPositions.remove(pos);
     }
 
+    public static void unregisterAllPositions() {
+        highlightPositions.clear();
+    }
+
     public static void init() {
         if (initialized) return;
         WorldRenderEvents.AFTER_ENTITIES.register(ctx -> {
