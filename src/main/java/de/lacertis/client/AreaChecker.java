@@ -1,12 +1,17 @@
 // Datei: src/main/java/de/lacertis/client/AreaChecker.java
 package de.lacertis.client;
 
+import de.lacertis.client.config.ModConfig;
+import de.lacertis.client.solver.PuzzleInput;
+import de.lacertis.client.solver.PuzzleSolver;
+import de.lacertis.client.solver.RenderSolvedPuzzle;
+import de.lacertis.client.solver.SolverMode;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AreaChecker {
@@ -48,10 +53,24 @@ public class AreaChecker {
 
     private static void onAreaEnter(PlayerArea areaType) {
         System.out.println("Entered area: " + areaType);
+
         if (areaType == PlayerArea.LIGHTS_OUT) {
+            if (!AutoConfig.getConfigHolder(ModConfig.class).getConfig().AutoSolveLightsOut) {
+                return;
+            }
             PuzzleSolver.Tile[][] grid = PuzzleInput.createGridFromLights(PuzzleInput.createLightStates());
-            System.out.println(PuzzleSolver.solveFullGrid(grid, true));
-            RenderSolvedPuzzle.renderSolution(PuzzleSolver.solveFullGrid(grid, true));
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().solverMode == SolverMode.ALL_ON) {
+                List<PuzzleSolver.Pos> solution = PuzzleSolver.solveAllOnOptimized(grid);
+                RenderSolvedPuzzle.renderSolution(solution);
+            }
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().solverMode == SolverMode.ALL_OFF) {
+                List<PuzzleSolver.Pos> solution = PuzzleSolver.solveAllOffOptimized(grid);
+                RenderSolvedPuzzle.renderSolution(solution);
+            }
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().solverMode == SolverMode.STRENGTH) {
+                List<PuzzleSolver.Pos> solution = PuzzleSolver.solveStrengthOptimized(grid);
+                RenderSolvedPuzzle.renderSolution(solution);
+            }
         }
     }
 

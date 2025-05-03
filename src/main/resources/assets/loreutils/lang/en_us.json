@@ -1,0 +1,5 @@
+{
+  "text.autoconfig.loreutils.option.AutoSolveLightsOut": "Auto Solve Lights Out",
+  "text.autoconfig.loreutils.option.solverMode": "Solver Mode",
+  "text.autoconfig.loreutils.option.solverMode.@Tooltip": "Choose how the solver behaves: All On, All Off, or Strength"
+}

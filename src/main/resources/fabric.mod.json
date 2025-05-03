@@ -22,6 +22,9 @@
 		],
 		"client": [
 			"de.lacertis.LoreUtilsClient"
+		],
+		"modmenu": [
+			"de.lacertis.client.config.Configuration"
 		]
 	},
 	"mixins": [
@@ -31,7 +34,12 @@
 		"fabricloader": ">=0.16.14",
 		"minecraft": "~1.21.4",
 		"java": ">=21",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"cloth-config": "*",
+		"modmenu": "*"
+	},
+	"custom": {
+		"modmenu:api": true
 	},
 	"suggests": {
 		"another-mod": "*"

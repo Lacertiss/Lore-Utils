@@ -1,6 +1,4 @@
-package de.lacertis.client;
-
-import java.util.Arrays;
+package de.lacertis.client.solver;
 
 public class PuzzleInput {
 
@@ -27,24 +25,24 @@ public class PuzzleInput {
     public static boolean[][] createLightStates() {
         boolean[][] lightStates = new boolean[7][7];
         LightsOutCoords[] coords = LightsOutCoords.values();
-
+        int idx = 0;
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                int index = x * 7 + y;
-                if (index < coords.length && triggerLayout[x][y]) {
-                    LightsOutCoords c = coords[index];
-                    boolean lampBelow = isLampPowered((int) c.getX(), (int) c.getY() - 1, (int) c.getZ());
-                    boolean lampEast  = isLampPowered((int) c.getX() + 1, (int) c.getY(), (int) c.getZ());
-                    lightStates[x][y] = lampBelow || lampEast;
+                if (triggerLayout[x][y]) {
+                    LightsOutCoords c = coords[idx++];
+                    int bx = (int) c.getX();
+                    int by = (int) c.getY();
+                    int bz = (int) c.getZ();
+                    boolean north = isLampPowered(bx, by, bz - 1);
+                    boolean south = isLampPowered(bx, by, bz + 1);
+                    boolean east  = isLampPowered(bx + 1, by, bz);
+                    boolean west  = isLampPowered(bx - 1, by, bz);
+                    lightStates[x][y] = north || south || east || west;
                 } else {
                     lightStates[x][y] = false;
                 }
             }
         }
-        for (boolean[] row : lightStates) {
-            System.out.println(Arrays.toString(row));
-        }
-
         return lightStates;
     }
 

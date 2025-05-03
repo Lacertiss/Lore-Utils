@@ -1,0 +1,60 @@
+package de.lacertis.client.solver;
+
+public enum LightsOutCoords {
+    LIGHTS_OUT_COORD_1(-11259.5, 34, 12683.5),
+    LIGHTS_OUT_COORD_2(-11259.5, 34, 12669.5),
+    LIGHTS_OUT_COORD_3(-11259.5, 34, 12655.5),
+
+    LIGHTS_OUT_COORD_4(-11252.5, 34, 12690.5),
+    LIGHTS_OUT_COORD_5(-11252.5, 34, 12683.5),
+    LIGHTS_OUT_COORD_6(-11252.5, 34, 12676.5),
+    LIGHTS_OUT_COORD_7(-11252.5, 34, 12669.5),
+    LIGHTS_OUT_COORD_8(-11252.5, 34, 12662.5),
+    LIGHTS_OUT_COORD_9(-11252.5, 34, 12655.5),
+    LIGHTS_OUT_COORD_10(-11252.5, 34, 12648.5),
+
+    LIGHTS_OUT_COORD_11(-11245.5, 34, 12683.5),
+    LIGHTS_OUT_COORD_12(-11245.5, 34, 12676.5),
+    LIGHTS_OUT_COORD_13(-11245.5, 34, 12669.5),
+    LIGHTS_OUT_COORD_14(-11245.5, 34, 12662.5),
+
+    LIGHTS_OUT_COORD_15(-11238.5, 34, 12690.5),
+    LIGHTS_OUT_COORD_16(-11238.5, 34, 12683.5),
+    LIGHTS_OUT_COORD_17(-11238.5, 34, 12676.5),
+    LIGHTS_OUT_COORD_18(-11238.5, 35, 12669.5),
+    LIGHTS_OUT_COORD_19(-11238.5, 34, 12662.5),
+    LIGHTS_OUT_COORD_20(-11238.5, 34, 12655.5),
+    LIGHTS_OUT_COORD_21(-11238.5, 34, 12648.5),
+
+    LIGHTS_OUT_COORD_22(-11231.5, 34, 12676.5),
+    LIGHTS_OUT_COORD_23(-11231.5, 34, 12669.5),
+    LIGHTS_OUT_COORD_24(-11231.5, 34, 12662.5),
+    LIGHTS_OUT_COORD_25(-11231.5, 34, 12655.5),
+
+    LIGHTS_OUT_COORD_26(-11224.5, 34, 12690.5),
+    LIGHTS_OUT_COORD_27(-11224.5, 34, 12683.5),
+    LIGHTS_OUT_COORD_28(-11224.5, 34, 12676.5),
+    LIGHTS_OUT_COORD_29(-11224.5, 34, 12669.5),
+    LIGHTS_OUT_COORD_30(-11224.5, 34, 12662.5),
+    LIGHTS_OUT_COORD_31(-11224.5, 34, 12655.5),
+    LIGHTS_OUT_COORD_32(-11224.5, 34, 12648.5),
+
+    LIGHTS_OUT_COORD_33(-11217.5, 34, 12683.5),
+    LIGHTS_OUT_COORD_34(-11217.5, 34, 12669.5),
+    LIGHTS_OUT_COORD_35(-11217.5, 34, 12655.5);
+
+
+    private final double x;
+    private final double y;
+    private final double z;
+
+    LightsOutCoords(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    public double getX() { return x; }
+    public double getY() { return y; }
+    public double getZ() { return z; }
+}

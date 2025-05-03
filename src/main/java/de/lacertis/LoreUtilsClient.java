@@ -1,6 +1,9 @@
 package de.lacertis;
 
 import de.lacertis.client.*;
+import de.lacertis.client.config.ModConfig;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.util.math.Box;
@@ -9,6 +12,8 @@ public class LoreUtilsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+
+        AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new);
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             String serverAddress = handler.getConnection().getAddress().toString();
@@ -19,35 +24,13 @@ public class LoreUtilsClient implements ClientModInitializer {
 
                 EspRender.init();
                 AreaChecker.init();
+                LineRender lineRender = new LineRender();
+                lineRender.init();
             } else {
                 EspRender.uninit();
-                AreaChecker.init();
+                AreaChecker.uninit();
             }
         });
-        LineRender lineRender = new LineRender();
-        lineRender.init();
 
-        //AreaChecker.addArea(testBox);
-        //EspRender.registerPosition(new BlockPos(100, 64, 100));
-
-        /*
-        boolean[][] lightStates = new boolean[][] {
-                {false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false},
-                {false, false, false, false, false, false, false}
-        };
-
-        PuzzleSolver.Tile[][] grid = PuzzleInput.createGridFromLights(lightStates);
-
-        System.out.println("Lights On:");
-        System.out.println(PuzzleSolver.solveAllOnOptimized(grid));
-
-        System.out.println("Lights Out:");
-        System.out.println(PuzzleSolver.solveAllOffOptimized(grid));
-        */
     }
 }
