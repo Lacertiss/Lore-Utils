@@ -22,9 +22,11 @@ public class LoreUtilsClient implements ClientModInitializer {
                 System.out.println("Detected connection to PvP Legacy server.");
 
                 AreaChecker.addArea(new Box(-11213, 35, 12646.5, -11261, 60, 12692), PlayerArea.LIGHTS_OUT);
+                AreaChecker.addArea(new Box(-11100.5, 1, 12621.5, -11400.5, 70, 12100.5), PlayerArea.ANUAR_GEM);
 
                 EspRender.init();
                 AreaChecker.init();
+
                 LineRender lineRender = new LineRender();
                 lineRender.init();
             } else {

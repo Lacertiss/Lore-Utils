@@ -2,7 +2,7 @@ package de.lacertis.client.solver;
 
 import java.util.*;
 
-public class PuzzleSolver {
+public class LightsOutSolver {
 
     public record Pos(int x, int y) {}
 
@@ -106,7 +106,7 @@ public class PuzzleSolver {
         int[][] targetGrid = new int[7][7];
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                targetGrid[x][y] = PuzzleInput.triggerLayout[x][y] ? 1 : 0;
+                targetGrid[x][y] = LightsOutInput.triggerLayout[x][y] ? 1 : 0;
             }
         }
         return solveFullGrid(grid, targetGrid);
@@ -116,7 +116,7 @@ public class PuzzleSolver {
         int[][] targetGrid = new int[7][7];
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                targetGrid[x][y] = PuzzleInput.triggerLayout[x][y] ? 0 : 0;
+                targetGrid[x][y] = LightsOutInput.triggerLayout[x][y] ? 0 : 0;
             }
         }
         return solveFullGrid(grid, targetGrid);

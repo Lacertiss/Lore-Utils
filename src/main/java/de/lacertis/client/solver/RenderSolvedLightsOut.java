@@ -10,27 +10,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class RenderSolvedPuzzle {
+public class RenderSolvedLightsOut {
 
-    public static Map<PuzzleSolver.Pos, LightsOutCoords> createMapping() {
+    public static Map<LightsOutSolver.Pos, LightsOutCoords> createMapping() {
         LightsOutCoords[] coords = LightsOutCoords.values();
-        Map<PuzzleSolver.Pos, LightsOutCoords> mapping = new HashMap<>();
+        Map<LightsOutSolver.Pos, LightsOutCoords> mapping = new HashMap<>();
         int idx = 0;
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                if (PuzzleInput.triggerLayout[x][y]) {
-                    mapping.put(new PuzzleSolver.Pos(x, y), coords[idx++]);
+                if (LightsOutInput.triggerLayout[x][y]) {
+                    mapping.put(new LightsOutSolver.Pos(x, y), coords[idx++]);
                 }
             }
         }
         return mapping;
     }
 
-    public static void renderSolution(List<PuzzleSolver.Pos> positions) {
-        Map<PuzzleSolver.Pos, LightsOutCoords> mapping = createMapping();
+    public static void renderSolution(List<LightsOutSolver.Pos> positions) {
+        Map<LightsOutSolver.Pos, LightsOutCoords> mapping = createMapping();
         Set<BlockPos> highlights = new HashSet<>();
 
-        for (PuzzleSolver.Pos move : positions) {
+        for (LightsOutSolver.Pos move : positions) {
             LightsOutCoords coord = mapping.get(move);
             if (coord != null) {
                 BlockPos pos = new BlockPos(

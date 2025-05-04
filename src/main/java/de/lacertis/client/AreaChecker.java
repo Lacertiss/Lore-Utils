@@ -2,10 +2,10 @@
 package de.lacertis.client;
 
 import de.lacertis.client.config.ModConfig;
-import de.lacertis.client.solver.PuzzleInput;
-import de.lacertis.client.solver.PuzzleSolver;
-import de.lacertis.client.solver.RenderSolvedPuzzle;
-import de.lacertis.client.solver.SolverMode;
+import de.lacertis.client.solver.LightsOutInput;
+import de.lacertis.client.solver.LightsOutSolver;
+import de.lacertis.client.solver.RenderSolvedLightsOut;
+import de.lacertis.client.solver.LughtsOutSolverMode;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.util.math.Box;
@@ -58,20 +58,27 @@ public class AreaChecker {
             if (!AutoConfig.getConfigHolder(ModConfig.class).getConfig().AutoSolveLightsOut) {
                 return;
             }
-            MessageManager.sendColored("Solving Lights Out: &7" + AutoConfig.getConfigHolder(ModConfig.class).getConfig().solverMode);
-            PuzzleSolver.Tile[][] grid = PuzzleInput.createGridFromLights(PuzzleInput.createLightStates());
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().solverMode == SolverMode.ALL_ON) {
-                List<PuzzleSolver.Pos> solution = PuzzleSolver.solveAllOnOptimized(grid);
-                RenderSolvedPuzzle.renderSolution(solution);
+            MessageManager.sendColored("Solving Lights Out: &7" + AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode);
+            LightsOutSolver.Tile[][] grid = LightsOutInput.createGridFromLights(LightsOutInput.createLightStates());
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LughtsOutSolverMode.ALL_ON) {
+                List<LightsOutSolver.Pos> solution = LightsOutSolver.solveAllOnOptimized(grid);
+                RenderSolvedLightsOut.renderSolution(solution);
             }
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().solverMode == SolverMode.ALL_OFF) {
-                List<PuzzleSolver.Pos> solution = PuzzleSolver.solveAllOffOptimized(grid);
-                RenderSolvedPuzzle.renderSolution(solution);
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LughtsOutSolverMode.ALL_OFF) {
+                List<LightsOutSolver.Pos> solution = LightsOutSolver.solveAllOffOptimized(grid);
+                RenderSolvedLightsOut.renderSolution(solution);
             }
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().solverMode == SolverMode.STRENGTH) {
-                List<PuzzleSolver.Pos> solution = PuzzleSolver.solveStrengthOptimized(grid);
-                RenderSolvedPuzzle.renderSolution(solution);
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LughtsOutSolverMode.STRENGTH) {
+                List<LightsOutSolver.Pos> solution = LightsOutSolver.solveStrengthOptimized(grid);
+                RenderSolvedLightsOut.renderSolution(solution);
             }
+        }
+
+        if (areaType == PlayerArea.ANUAR_GEM) {
+            EspRender.registerPosition(Coordinate.ANUAR_1.getPos());
+            EspRender.registerPosition(Coordinate.ANUAR_2.getPos());
+            EspRender.registerPosition(Coordinate.ANUAR_3.getPos());
+            EspRender.registerPosition(Coordinate.ANUAR_4.getPos());
         }
     }
 

@@ -1,6 +1,6 @@
 package de.lacertis.client.config;
 
-import de.lacertis.client.solver.SolverMode;
+import de.lacertis.client.solver.LughtsOutSolverMode;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -12,5 +12,5 @@ public class ModConfig implements ConfigData {
 
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     @ConfigEntry.Gui.Tooltip(count = 1)
-    public SolverMode solverMode = SolverMode.ALL_ON;
+    public LughtsOutSolverMode lughtsOutSolverMode = LughtsOutSolverMode.ALL_ON;
 }
