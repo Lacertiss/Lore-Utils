@@ -58,6 +58,7 @@ public class AreaChecker {
             if (!AutoConfig.getConfigHolder(ModConfig.class).getConfig().AutoSolveLightsOut) {
                 return;
             }
+            MessageManager.sendColored("Solving Lights Out: &7" + AutoConfig.getConfigHolder(ModConfig.class).getConfig().solverMode);
             PuzzleSolver.Tile[][] grid = PuzzleInput.createGridFromLights(PuzzleInput.createLightStates());
             if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().solverMode == SolverMode.ALL_ON) {
                 List<PuzzleSolver.Pos> solution = PuzzleSolver.solveAllOnOptimized(grid);

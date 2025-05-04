@@ -1,10 +1,14 @@
 package de.lacertis.client.solver;
 
 import de.lacertis.client.EspRender;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.util.math.BlockPos;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class RenderSolvedPuzzle {
 
@@ -24,11 +28,27 @@ public class RenderSolvedPuzzle {
 
     public static void renderSolution(List<PuzzleSolver.Pos> positions) {
         Map<PuzzleSolver.Pos, LightsOutCoords> mapping = createMapping();
+        Set<BlockPos> highlights = new HashSet<>();
+
         for (PuzzleSolver.Pos move : positions) {
             LightsOutCoords coord = mapping.get(move);
             if (coord != null) {
-                EspRender.registerPosition(new BlockPos((int) coord.getX(), (int) coord.getY() + 1, (int) coord.getZ()));
+                BlockPos pos = new BlockPos(
+                        (int) coord.getX(),
+                        (int) coord.getY() + 1,
+                        (int) coord.getZ()
+                );
+                EspRender.registerPosition(pos);
+                highlights.add(pos);
             }
         }
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (client.player == null) return;
+            BlockPos playerPos = client.player.getBlockPos();
+            if (highlights.remove(playerPos)) {
+                EspRender.unregisterPosition(playerPos);
+            }
+        });
     }
 }
