@@ -11,6 +11,6 @@ public class ModConfig implements ConfigData {
     public boolean AutoSolveLightsOut = true;
 
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-    @ConfigEntry.Gui.Tooltip(count = 2)
+    @ConfigEntry.Gui.Tooltip(count = 1)
     public SolverMode solverMode = SolverMode.ALL_ON;
 }
