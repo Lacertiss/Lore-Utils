@@ -5,7 +5,7 @@ import de.lacertis.client.config.ModConfig;
 import de.lacertis.client.solver.LightsOutInput;
 import de.lacertis.client.solver.LightsOutSolver;
 import de.lacertis.client.solver.RenderSolvedLightsOut;
-import de.lacertis.client.solver.LughtsOutSolverMode;
+import de.lacertis.client.solver.LightsOutSolverMode;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.util.math.Box;
@@ -60,15 +60,15 @@ public class AreaChecker {
             }
             MessageManager.sendColored("Solving Lights Out: &7" + AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode);
             LightsOutSolver.Tile[][] grid = LightsOutInput.createGridFromLights(LightsOutInput.createLightStates());
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LughtsOutSolverMode.ALL_ON) {
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LightsOutSolverMode.ALL_ON) {
                 List<LightsOutSolver.Pos> solution = LightsOutSolver.solveAllOnOptimized(grid);
                 RenderSolvedLightsOut.renderSolution(solution);
             }
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LughtsOutSolverMode.ALL_OFF) {
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LightsOutSolverMode.ALL_OFF) {
                 List<LightsOutSolver.Pos> solution = LightsOutSolver.solveAllOffOptimized(grid);
                 RenderSolvedLightsOut.renderSolution(solution);
             }
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LughtsOutSolverMode.STRENGTH) {
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LightsOutSolverMode.STRENGTH) {
                 List<LightsOutSolver.Pos> solution = LightsOutSolver.solveStrengthOptimized(grid);
                 RenderSolvedLightsOut.renderSolution(solution);
             }

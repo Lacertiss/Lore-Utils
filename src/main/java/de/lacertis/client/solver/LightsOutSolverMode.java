@@ -1,6 +1,6 @@
 package de.lacertis.client.solver;
 
-public enum LughtsOutSolverMode {
+public enum LightsOutSolverMode {
     ALL_ON,
     ALL_OFF,
     STRENGTH
