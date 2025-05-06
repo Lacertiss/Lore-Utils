@@ -12,5 +12,5 @@ public class ModConfig implements ConfigData {
 
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     @ConfigEntry.Gui.Tooltip(count = 1)
-    public LightsOutSolverMode lughtsOutSolverMode = LightsOutSolverMode.ALL_ON;
+    public LightsOutSolverMode lightsOutSolverMode = LightsOutSolverMode.ALL_ON;
 }
