@@ -58,17 +58,17 @@ public class AreaChecker {
             if (!AutoConfig.getConfigHolder(ModConfig.class).getConfig().AutoSolveLightsOut) {
                 return;
             }
-            MessageManager.sendColored("Solving Lights Out: &7" + AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode);
+            MessageManager.sendColored("Solving Lights Out: &7" + AutoConfig.getConfigHolder(ModConfig.class).getConfig().lightsOutSolverMode);
             LightsOutSolver.Tile[][] grid = LightsOutInput.createGridFromLights(LightsOutInput.createLightStates());
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LightsOutSolverMode.ALL_ON) {
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lightsOutSolverMode == LightsOutSolverMode.ALL_ON) {
                 List<LightsOutSolver.Pos> solution = LightsOutSolver.solveAllOnOptimized(grid);
                 RenderSolvedLightsOut.renderSolution(solution);
             }
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LightsOutSolverMode.ALL_OFF) {
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lightsOutSolverMode == LightsOutSolverMode.ALL_OFF) {
                 List<LightsOutSolver.Pos> solution = LightsOutSolver.solveAllOffOptimized(grid);
                 RenderSolvedLightsOut.renderSolution(solution);
             }
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lughtsOutSolverMode == LightsOutSolverMode.STRENGTH) {
+            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lightsOutSolverMode == LightsOutSolverMode.STRENGTH) {
                 List<LightsOutSolver.Pos> solution = LightsOutSolver.solveStrengthOptimized(grid);
                 RenderSolvedLightsOut.renderSolution(solution);
             }
