@@ -7,7 +7,6 @@ import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 
 public class LoreUtilsClient implements ClientModInitializer {
 

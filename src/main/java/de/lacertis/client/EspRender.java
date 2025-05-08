@@ -1,4 +1,3 @@
-// Datei: src/main/java/de/lacertis/client/EspRender.java
 package de.lacertis.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;

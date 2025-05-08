@@ -1,4 +1,3 @@
-// Datei: src/main/java/de/lacertis/client/AreaChecker.java
 package de.lacertis.client;
 
 import de.lacertis.client.config.ModConfig;
