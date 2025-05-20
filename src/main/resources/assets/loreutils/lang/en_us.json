@@ -1,0 +1,6 @@
+{
+  "text.autoconfig.loreutils.option.AutoSolveLightsOut": "Auto Solve Lights Out",
+  "text.autoconfig.loreutils.option.AutoSolveLightsOut.@Tooltip": "Choose whether to automatically solve the Lights Out puzzle when you enter the room.",
+  "text.autoconfig.loreutils.option.lightsOutSolverMode": "Solver Mode",
+  "text.autoconfig.loreutils.option.lightsOutSolverMode.@Tooltip": "Choose how the solver behaves: All On, All Off, or Strength"
+}

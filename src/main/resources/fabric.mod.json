@@ -1,0 +1,47 @@
+{
+	"schemaVersion": 1,
+	"id": "loreutils",
+	"version": "${version}",
+	"name": "Lore Utils",
+	"description": "Life quality improvements for PVPLegacy Lore \nSpecial thanks to Crafty & Phoenix for the helping with the creation of this mod.",
+	"authors": [
+		"Lacertis"
+	],
+	"contact": {
+		"sources": "https://github.com/Lacertiss/Lore-Utils"
+	},
+	"license": "MIT",
+	"icon": "assets/loreutils/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"de.lacertis.LoreUtils"
+		],
+		"fabric-datagen": [
+			"de.lacertis.LoreUtilsDataGenerator"
+		],
+		"client": [
+			"de.lacertis.LoreUtilsClient"
+		],
+		"modmenu": [
+			"de.lacertis.client.config.Configuration"
+		]
+	},
+	"mixins": [
+		"loreutils.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*",
+		"cloth-config": "*",
+		"modmenu": "*"
+	},
+	"custom": {
+		"modmenu:api": true
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
