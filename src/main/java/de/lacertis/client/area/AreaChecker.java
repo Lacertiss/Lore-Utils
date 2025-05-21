@@ -1,15 +1,7 @@
 package de.lacertis.client.area;
 
-import de.lacertis.client.Coordinate;
 import de.lacertis.client.EspRender;
-import de.lacertis.client.MessageManager;
 import de.lacertis.client.PlayerArea;
-import de.lacertis.client.config.ModConfig;
-import de.lacertis.client.solver.LightsOutInput;
-import de.lacertis.client.solver.LightsOutSolver;
-import de.lacertis.client.solver.RenderSolvedLightsOut;
-import de.lacertis.client.solver.LightsOutSolverMode;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
