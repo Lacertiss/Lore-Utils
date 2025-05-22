@@ -30,6 +30,8 @@ public class RenderSolvedLightsOut {
         Map<LightsOutSolver.Pos, LightsOutCoords> mapping = createMapping();
         Set<BlockPos> highlights = new HashSet<>();
 
+        EspRender.unregisterAllPositions();
+
         for (LightsOutSolver.Pos move : positions) {
             LightsOutCoords coord = mapping.get(move);
             if (coord != null) {

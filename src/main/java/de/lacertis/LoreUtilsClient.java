@@ -2,6 +2,7 @@ package de.lacertis;
 
 import de.lacertis.client.*;
 import de.lacertis.client.area.AreaChecker;
+import de.lacertis.client.command.ClientCommands;
 import de.lacertis.client.config.ModConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
@@ -22,6 +23,8 @@ public class LoreUtilsClient implements ClientModInitializer {
 
                 AreaChecker.addArea(new Box(-11213, 35, 12646.5, -11261, 60, 12692), PlayerArea.LIGHTS_OUT);
                 AreaChecker.addArea(new Box(-11100.5, 1, 12621.5, -11400.5, 70, 12100.5), PlayerArea.ANUAR_GEM);
+
+                ClientCommands.register();
 
                 EspRender.init();
                 AreaChecker.init();
