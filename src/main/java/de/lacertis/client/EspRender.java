@@ -1,6 +1,9 @@
 package de.lacertis.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import de.lacertis.client.config.ModConfig;
+import de.lacertis.client.config.ConfigTranslator;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -46,11 +49,14 @@ public class EspRender {
             matrices.push();
             matrices.translate(-camX, -camY, -camZ);
 
-            float r = 0.68f, g = 0.85f, b = 0.90f, a = 0.8f;
+            ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+            int color = config.primaryColor;
+            float[] rgb = ConfigTranslator.translate(color);
+            float alpha = ConfigTranslator.translateAlpha(config.alphaPercentage);
             double expand = 0.002;
             for (BlockPos pos : highlightPositions) {
                 Box box = new Box(pos).expand(expand, expand, expand);
-                DebugRenderer.drawBox(matrices, consumers, box, r, g, b, a);
+                DebugRenderer.drawBox(matrices, consumers, box, rgb[0], rgb[1], rgb[2], alpha);
             }
 
             matrices.pop();

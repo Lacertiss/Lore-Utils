@@ -13,4 +13,13 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
     @ConfigEntry.Gui.Tooltip(count = 1)
     public LightsOutSolverMode lightsOutSolverMode = LightsOutSolverMode.ALL_ON;
+
+    @ConfigEntry.ColorPicker
+    @ConfigEntry.Gui.Tooltip
+    public int primaryColor = 0x03BEFC;
+
+    @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
+    @ConfigEntry.Gui.Tooltip
+    public int alphaPercentage = 80;
 }
+

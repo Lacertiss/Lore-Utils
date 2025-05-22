@@ -1,5 +1,8 @@
 package de.lacertis.client;
 
+import de.lacertis.client.config.ModConfig;
+import de.lacertis.client.config.ConfigTranslator;
+import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.render.RenderLayer;
@@ -44,18 +47,23 @@ public class LineRender {
         VertexConsumer consumer = provider.getBuffer(RenderLayer.getLines());
         Matrix4f mat = ms.peek().getPositionMatrix();
 
+        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        int color = config.primaryColor;
+        float[] rgb = ConfigTranslator.translate(color);
+        // Alpha aus Config wird mit dem pro Zeile gesetzten alpha multipliziert
+        float globalAlpha = ConfigTranslator.translateAlpha(config.alphaPercentage);
+
         for (Line line : LINES) {
             Vec3d s = line.start.subtract(camPos);
             Vec3d e = line.end.subtract(camPos);
+            float effectiveAlpha = (line.a / 255f) * globalAlpha;
 
-            consumer
-                    .vertex(mat, (float) s.x, (float) s.y, (float) s.z)
-                    .color(line.r, line.g, line.b, line.a)
+            consumer.vertex(mat, (float) s.x, (float) s.y, (float) s.z)
+                    .color(rgb[0], rgb[1], rgb[2], effectiveAlpha)
                     .normal(ms.peek(), 0f, 1f, 0f);
 
-            consumer
-                    .vertex(mat, (float) e.x, (float) e.y, (float) e.z)
-                    .color(line.r, line.g, line.b, line.a)
+            consumer.vertex(mat, (float) e.x, (float) e.y, (float) e.z)
+                    .color(rgb[0], rgb[1], rgb[2], effectiveAlpha)
                     .normal(ms.peek(), 0f, 1f, 0f);
         }
     }
@@ -67,7 +75,10 @@ public class LineRender {
         public Line(Vec3d start, Vec3d end, int r, int g, int b, int a) {
             this.start = start;
             this.end = end;
-            this.r = r; this.g = g; this.b = b; this.a = a;
+            this.r = r;
+            this.g = g;
+            this.b = b;
+            this.a = a;
         }
     }
 }
