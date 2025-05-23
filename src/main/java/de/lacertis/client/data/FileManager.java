@@ -23,6 +23,7 @@ public class FileManager {
     static {
         try {
             Files.createDirectories(CONFIG_DIR);
+
         } catch (IOException e) {
             throw new RuntimeException("Could not create config directory: " + CONFIG_DIR, e);
         }
@@ -30,6 +31,19 @@ public class FileManager {
 
     public static void createJsonFile(String name, Object defaultObj) throws IOException {
         Path file = getFilePath(name);
+        if (Files.notExists(file)) {
+            try (Writer writer = Files.newBufferedWriter(file, StandardOpenOption.CREATE_NEW)) {
+                GSON.toJson(defaultObj, writer);
+            }
+        }
+    }
+
+    public static void createJsonFileInSubfolder(String subFolder, String name, Object defaultObj) throws IOException {
+        Path folder = CONFIG_DIR.resolve(subFolder);
+        if (!Files.exists(folder)) {
+            Files.createDirectories(folder);
+        }
+        Path file = folder.resolve(name.endsWith(".json") ? name : name + ".json");
         if (Files.notExists(file)) {
             try (Writer writer = Files.newBufferedWriter(file, StandardOpenOption.CREATE_NEW)) {
                 GSON.toJson(defaultObj, writer);

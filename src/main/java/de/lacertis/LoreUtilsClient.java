@@ -20,22 +20,30 @@ public class LoreUtilsClient implements ClientModInitializer {
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             String serverAddress = handler.getConnection().getAddress().toString();
             if (serverAddress.contains("pvplegacy.net")) {
-
-                AreaChecker.addArea(new Box(-11213, 35, 12646.5, -11261, 60, 12692), PlayerArea.LIGHTS_OUT);
-                AreaChecker.addArea(new Box(-11100.5, 1, 12621.5, -11400.5, 70, 12100.5), PlayerArea.ANUAR_GEM);
-
-                ClientCommands.register();
-
-                EspRender.init();
-                AreaChecker.init();
-
-                LineRender lineRender = new LineRender();
-                lineRender.init();
+                init();
             } else {
-                EspRender.uninit();
-                AreaChecker.uninit();
+                uninit();
             }
         });
 
     }
+
+    private void init() {
+        AreaChecker.addArea(new Box(-11213, 35, 12646.5, -11261, 60, 12692), PlayerArea.LIGHTS_OUT);
+        AreaChecker.addArea(new Box(-11100.5, 1, 12621.5, -11400.5, 70, 12100.5), PlayerArea.ANUAR_GEM);
+
+        ClientCommands.register();
+
+        EspRender.init();
+        AreaChecker.init();
+
+        LineRender lineRender = new LineRender();
+        lineRender.init();
+    }
+
+    private void uninit() {
+        EspRender.uninit();
+        AreaChecker.uninit();
+    }
+
 }
