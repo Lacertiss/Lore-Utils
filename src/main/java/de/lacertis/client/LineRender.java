@@ -50,7 +50,6 @@ public class LineRender {
         ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
         int color = config.primaryColor;
         float[] rgb = ConfigTranslator.translate(color);
-        // Alpha aus Config wird mit dem pro Zeile gesetzten alpha multipliziert
         float globalAlpha = ConfigTranslator.translateAlpha(config.alphaPercentage);
 
         for (Line line : LINES) {
