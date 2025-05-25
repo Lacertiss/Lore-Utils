@@ -2,7 +2,9 @@ package de.lacertis.client.command;
 
 import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.context.CommandContext;
 import de.lacertis.client.EspRender;
 import de.lacertis.client.LineRender;
 import de.lacertis.client.MessageManager;
@@ -24,6 +26,7 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.argument.Vec3ArgumentType;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import com.google.gson.Gson;
@@ -180,22 +183,33 @@ public class ClientCommands {
                                         .then(literal("line")
                                                 .executes(ctx -> {
                                                     BlockPos bs = MinecraftClient.getInstance().player.getBlockPos();
-                                                    BlockPos be = bs;
-                                                    currentBuilder.addElement(new PathwayElement(PathwayType.LINE, bs, be));
-                                                    MessageManager.sendColored("Line added from " + bs + " to " + be + ".");
+                                                    currentBuilder.addElement(new PathwayElement(PathwayType.LINE, bs, bs));
+                                                    MessageManager.sendColored("Line added from " + bs + " to " + bs + ".");
                                                     return 1;
                                                 })
-                                                .then(argument("start", Vec3ArgumentType.vec3())
-                                                        .then(argument("end", Vec3ArgumentType.vec3())
-                                                                .executes(ctx -> {
-                                                                    Vec3d vs = ctx.getArgument("start", Vec3d.class);
-                                                                    Vec3d ve = ctx.getArgument("end", Vec3d.class);
-                                                                    BlockPos bs = new BlockPos((int) vs.x, (int) vs.y, (int) vs.z);
-                                                                    BlockPos be = new BlockPos((int) ve.x, (int) ve.y, (int) ve.z);
-                                                                    currentBuilder.addElement(new PathwayElement(PathwayType.LINE, bs, be));
-                                                                    MessageManager.sendColored("Line added from " + bs + " to " + be + ".");
-                                                                    return 1;
-                                                                })
+                                                .then(argument("startX", DoubleArgumentType.doubleArg())
+                                                        .then(argument("startY", DoubleArgumentType.doubleArg())
+                                                                .then(argument("startZ", DoubleArgumentType.doubleArg())
+                                                                        .then(argument("endX", DoubleArgumentType.doubleArg())
+                                                                                .then(argument("endY", DoubleArgumentType.doubleArg())
+                                                                                        .then(argument("endZ", DoubleArgumentType.doubleArg())
+                                                                                                .executes(ctx -> {
+                                                                                                    double sx = DoubleArgumentType.getDouble(ctx, "startX");
+                                                                                                    double sy = DoubleArgumentType.getDouble(ctx, "startY");
+                                                                                                    double sz = DoubleArgumentType.getDouble(ctx, "startZ");
+                                                                                                    double ex = DoubleArgumentType.getDouble(ctx, "endX");
+                                                                                                    double ey = DoubleArgumentType.getDouble(ctx, "endY");
+                                                                                                    double ez = DoubleArgumentType.getDouble(ctx, "endZ");
+                                                                                                    BlockPos bs = new BlockPos((int) sx, (int) sy, (int) sz);
+                                                                                                    BlockPos be = new BlockPos((int) ex, (int) ey, (int) ez);
+                                                                                                    currentBuilder.addElement(new PathwayElement(PathwayType.LINE, bs, be));
+                                                                                                    MessageManager.sendColored("Line added from " + bs + " to " + be + ".");
+                                                                                                    return 1;
+                                                                                                })
+                                                                                        )
+                                                                                )
+                                                                        )
+                                                                )
                                                         )
                                                 )
                                         )
@@ -206,14 +220,20 @@ public class ClientCommands {
                                                     MessageManager.sendColored("Block highlight added at " + bp + ".");
                                                     return 1;
                                                 })
-                                                .then(argument("pos", Vec3ArgumentType.vec3())
-                                                        .executes(ctx -> {
-                                                            Vec3d v = ctx.getArgument("pos", Vec3d.class);
-                                                            BlockPos bp = new BlockPos((int) v.x, (int) v.y, (int) v.z);
-                                                            currentBuilder.addElement(new PathwayElement(PathwayType.BLOCK_HIGHLIGHT, bp, null));
-                                                            MessageManager.sendColored("Block highlight added at " + bp + ".");
-                                                            return 1;
-                                                        })
+                                                .then(argument("x", DoubleArgumentType.doubleArg())
+                                                        .then(argument("y", DoubleArgumentType.doubleArg())
+                                                                .then(argument("z", DoubleArgumentType.doubleArg())
+                                                                        .executes(ctx -> {
+                                                                            double x = DoubleArgumentType.getDouble(ctx, "x");
+                                                                            double y = DoubleArgumentType.getDouble(ctx, "y");
+                                                                            double z = DoubleArgumentType.getDouble(ctx, "z");
+                                                                            BlockPos bp = new BlockPos((int) x, (int) y, (int) z);
+                                                                            currentBuilder.addElement(new PathwayElement(PathwayType.BLOCK_HIGHLIGHT, bp, null));
+                                                                            MessageManager.sendColored("Block highlight added at " + bp + ".");
+                                                                            return 1;
+                                                                        })
+                                                                )
+                                                        )
                                                 )
                                         )
                                 )
@@ -369,4 +389,12 @@ public class ClientCommands {
 
         );
     }
+
+    private static Vec3d getVec3(CommandContext<FabricClientCommandSource> ctx, String name) {
+        @SuppressWarnings("unchecked")
+        CommandContext<ServerCommandSource> serverCtx =
+                (CommandContext<ServerCommandSource>)(CommandContext<?>)ctx;
+        return Vec3ArgumentType.getVec3(serverCtx, name);
+    }
+
 }
