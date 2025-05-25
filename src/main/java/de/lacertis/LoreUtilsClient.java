@@ -29,7 +29,6 @@ public class LoreUtilsClient implements ClientModInitializer {
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             String serverAddress = handler.getConnection().getAddress().toString();
-            init();
             if (serverAddress.contains("pvplegacy.net")) {
                 init();
             } else {
