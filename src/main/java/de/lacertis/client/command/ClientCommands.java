@@ -48,6 +48,7 @@ import static com.mojang.brigadier.arguments.StringArgumentType.word;
 public class ClientCommands {
 
     private static PathwayBuilder currentBuilder;
+    private static BlockPos tempLineStart;
 
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) ->
@@ -182,9 +183,15 @@ public class ClientCommands {
                                 .then(literal("add")
                                         .then(literal("line")
                                                 .executes(ctx -> {
-                                                    BlockPos bs = MinecraftClient.getInstance().player.getBlockPos();
-                                                    currentBuilder.addElement(new PathwayElement(PathwayType.LINE, bs, bs));
-                                                    MessageManager.sendColored("Line added from " + bs + " to " + bs + ".");
+                                                    BlockPos pos = MinecraftClient.getInstance().player.getBlockPos();
+                                                    if (tempLineStart == null) {
+                                                        tempLineStart = pos;
+                                                        MessageManager.sendColored("Start position set to " + pos + ".");
+                                                    } else {
+                                                        currentBuilder.addElement(new PathwayElement(PathwayType.LINE, tempLineStart, pos));
+                                                        MessageManager.sendColored("Line added from " + tempLineStart + " to " + pos + ".");
+                                                        tempLineStart = null;
+                                                    }
                                                     return 1;
                                                 })
                                                 .then(argument("startX", DoubleArgumentType.doubleArg())

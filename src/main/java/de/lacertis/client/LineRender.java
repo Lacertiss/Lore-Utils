@@ -1,5 +1,6 @@
 package de.lacertis.client;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.lacertis.client.config.ModConfig;
 import de.lacertis.client.config.ConfigTranslator;
 import me.shedaniel.autoconfig.AutoConfig;
