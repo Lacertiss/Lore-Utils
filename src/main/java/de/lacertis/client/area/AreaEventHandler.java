@@ -1,6 +1,5 @@
 package de.lacertis.client.area;
 
-import de.lacertis.client.Coordinate;
 import de.lacertis.client.EspRender;
 import de.lacertis.client.MessageManager;
 import de.lacertis.client.PlayerArea;

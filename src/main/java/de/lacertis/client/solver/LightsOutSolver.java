@@ -131,4 +131,5 @@ public class LightsOutSolver {
         }
         return solveFullGrid(grid, targetGrid);
     }
+
 }

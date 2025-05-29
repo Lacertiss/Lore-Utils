@@ -335,7 +335,7 @@ public class ClientCommands {
                                                 for (Path f : ds) {
                                                     Pathway p = new Gson().fromJson(Files.newBufferedReader(f), Pathway.class);
                                                     sb.append(p.getId())
-                                                            .append(p.isEnabled() ? " (on), " : " (off), ");
+                                                            .append(p.isEnabled() ? " &r(&aon&r), " : " &r(&coff&r), ");
                                                 }
                                             } catch (IOException e) {
                                                 MessageManager.sendColored("Error reading pathways list.");
