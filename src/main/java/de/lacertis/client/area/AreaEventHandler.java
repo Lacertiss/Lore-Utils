@@ -7,7 +7,6 @@ import de.lacertis.client.config.ModConfig;
 import de.lacertis.client.solver.LightsOutInput;
 import de.lacertis.client.solver.LightsOutSolver;
 import de.lacertis.client.solver.RenderSolvedLightsOut;
-import de.lacertis.client.solver.LightsOutSolverMode;
 import me.shedaniel.autoconfig.AutoConfig;
 
 import java.util.List;
@@ -15,37 +14,33 @@ import java.util.List;
 public class AreaEventHandler {
 
     public static void handleAreaEnter(PlayerArea areaType, boolean enter) {
-        // Light Out
-        if (areaType == PlayerArea.LIGHTS_OUT && enter) {
-            if (!AutoConfig.getConfigHolder(ModConfig.class).getConfig().AutoSolveLightsOut) {
-                return;
-            }
-            MessageManager.sendColored("Solving Lights Out: &7" +
-                    AutoConfig.getConfigHolder(ModConfig.class).getConfig().lightsOutSolverMode);
-            LightsOutSolver.Tile[][] grid = LightsOutInput.createGridFromLights(LightsOutInput.createLightStates());
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lightsOutSolverMode == LightsOutSolverMode.ALL_ON) {
-                List<LightsOutSolver.Pos> solution = LightsOutSolver.solveAllOnOptimized(grid);
+        if (areaType == PlayerArea.LIGHTS_OUT) {
+            if (enter) {
+                ModConfig cfg = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+                if (!cfg.AutoSolveLightsOut) return;
+                MessageManager.sendColored("Solving Lights Out: &7" + cfg.lightsOutSolverMode);
+                LightsOutSolver.Tile[][] grid = LightsOutInput.createGridFromLights(LightsOutInput.createLightStates());
+                List<LightsOutSolver.Pos> solution = switch (cfg.lightsOutSolverMode) {
+                    case ALL_ON -> LightsOutSolver.solveAllOnOptimized(grid);
+                    case ALL_OFF -> LightsOutSolver.solveAllOffOptimized(grid);
+                    case STRENGTH -> LightsOutSolver.solveStrengthOptimized(grid);
+                };
                 RenderSolvedLightsOut.renderSolution(solution);
+            } else {
+                EspRender.unregisterAllPositions();
             }
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lightsOutSolverMode == LightsOutSolverMode.ALL_OFF) {
-                List<LightsOutSolver.Pos> solution = LightsOutSolver.solveAllOffOptimized(grid);
-                RenderSolvedLightsOut.renderSolution(solution);
-            }
-            if (AutoConfig.getConfigHolder(ModConfig.class).getConfig().lightsOutSolverMode == LightsOutSolverMode.STRENGTH) {
-                List<LightsOutSolver.Pos> solution = LightsOutSolver.solveStrengthOptimized(grid);
-                RenderSolvedLightsOut.renderSolution(solution);
-            }
-        } else if (areaType == PlayerArea.LIGHTS_OUT && !(enter)) {
-            EspRender.unregisterAllPositions();
+            return;
         }
-        // AnuarGem
-        if (areaType == PlayerArea.ANUAR_GEM && enter) {
-            EspRender.registerPosition(Coordinate.ANUAR_1.getPos());
-            EspRender.registerPosition(Coordinate.ANUAR_2.getPos());
-            EspRender.registerPosition(Coordinate.ANUAR_3.getPos());
-            EspRender.registerPosition(Coordinate.ANUAR_4.getPos());
-        } else if (areaType == PlayerArea.ANUAR_GEM && !(enter)) {
-            EspRender.unregisterAllPositions();
+
+        if (areaType == PlayerArea.ANUAR_GEM) {
+            if (enter) {
+                EspRender.registerPosition(Coordinate.ANUAR_1.getPos());
+                EspRender.registerPosition(Coordinate.ANUAR_2.getPos());
+                EspRender.registerPosition(Coordinate.ANUAR_3.getPos());
+                EspRender.registerPosition(Coordinate.ANUAR_4.getPos());
+            } else {
+                EspRender.unregisterAllPositions();
+            }
         }
     }
 }
