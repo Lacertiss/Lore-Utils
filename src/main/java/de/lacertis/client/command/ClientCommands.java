@@ -123,11 +123,31 @@ public class ClientCommands {
                                         )
                                 )
                                 .then(literal("pathway")
+                                        .executes(ctx -> {
+                                            Path folder = FabricLoader.getInstance()
+                                                    .getConfigDir()
+                                                    .resolve("loreutils")
+                                                    .resolve("pathways");
+                                            StringBuilder sb = new StringBuilder("Pathways: ");
+                                            try (DirectoryStream<Path> ds = Files.newDirectoryStream(folder, "*.json")) {
+                                                for (Path f : ds) {
+                                                    Pathway p = new Gson().fromJson(Files.newBufferedReader(f), Pathway.class);
+                                                    sb.append(p.getId())
+                                                            .append(p.isEnabled() ? " &r(&aon&r), " : " &r(&coff&r), ");
+                                                }
+                                                String result = sb.toString().replaceAll(", $", "");
+                                                MessageManager.sendColored(result);
+                                            } catch (IOException e) {
+                                                MessageManager.sendColored("Error reading pathways list.");
+                                                e.printStackTrace();
+                                            }
+                                            return 1;
+                                        })
                                         .then(argument("id", word())
                                                 .executes(ctx -> {
                                                     String id = StringArgumentType.getString(ctx, "id");
                                                     currentBuilder = new PathwayBuilder().setId(id);
-                                                    MessageManager.sendColored("Pathway mode started for " + id + ".");
+                                                    MessageManager.sendColored("Pathway builder mode started for " + id + ".");
                                                     return 1;
                                                 })
                                         )
@@ -321,28 +341,6 @@ public class ClientCommands {
                                         .executes(ctx -> {
                                             currentBuilder = null;
                                             MessageManager.sendColored("Cancelled");
-                                            return 1;
-                                        })
-                                )
-                                .then(literal("list")
-                                        .executes(ctx -> {
-                                            Path folder = FabricLoader.getInstance()
-                                                    .getConfigDir()
-                                                    .resolve("loreutils")
-                                                    .resolve("pathways");
-                                            StringBuilder sb = new StringBuilder("Pathways: ");
-                                            try (DirectoryStream<Path> ds = Files.newDirectoryStream(folder, "*.json")) {
-                                                for (Path f : ds) {
-                                                    Pathway p = new Gson().fromJson(Files.newBufferedReader(f), Pathway.class);
-                                                    sb.append(p.getId())
-                                                            .append(p.isEnabled() ? " &r(&aon&r), " : " &r(&coff&r), ");
-                                                }
-                                            } catch (IOException e) {
-                                                MessageManager.sendColored("Error reading pathways list.");
-                                                e.printStackTrace();
-                                                return 1;
-                                            }
-                                            MessageManager.sendColored(sb.toString().replaceAll(", $", ""));
                                             return 1;
                                         })
                                 )

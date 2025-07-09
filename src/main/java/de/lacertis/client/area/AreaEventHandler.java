@@ -14,8 +14,9 @@ import java.util.List;
 
 public class AreaEventHandler {
 
-    public static void handleAreaEnter(PlayerArea areaType) {
-        if (areaType == PlayerArea.LIGHTS_OUT) {
+    public static void handleAreaEnter(PlayerArea areaType, boolean enter) {
+        // Light Out
+        if (areaType == PlayerArea.LIGHTS_OUT && enter) {
             if (!AutoConfig.getConfigHolder(ModConfig.class).getConfig().AutoSolveLightsOut) {
                 return;
             }
@@ -34,12 +35,17 @@ public class AreaEventHandler {
                 List<LightsOutSolver.Pos> solution = LightsOutSolver.solveStrengthOptimized(grid);
                 RenderSolvedLightsOut.renderSolution(solution);
             }
+        } else if (areaType == PlayerArea.LIGHTS_OUT && !(enter)) {
+            EspRender.unregisterAllPositions();
         }
-        if (areaType == PlayerArea.ANUAR_GEM) {
+        // AnuarGem
+        if (areaType == PlayerArea.ANUAR_GEM && enter) {
             EspRender.registerPosition(Coordinate.ANUAR_1.getPos());
             EspRender.registerPosition(Coordinate.ANUAR_2.getPos());
             EspRender.registerPosition(Coordinate.ANUAR_3.getPos());
             EspRender.registerPosition(Coordinate.ANUAR_4.getPos());
+        } else if (areaType == PlayerArea.ANUAR_GEM && !(enter)) {
+            EspRender.unregisterAllPositions();
         }
     }
 }

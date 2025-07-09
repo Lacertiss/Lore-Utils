@@ -48,13 +48,11 @@ public class AreaChecker {
     }
 
     private static void onAreaEnter(PlayerArea areaType) {
-        AreaEventHandler.handleAreaEnter(areaType);
+        AreaEventHandler.handleAreaEnter(areaType, true);
     }
 
     private static void onAreaExit(PlayerArea areaType) {
-        if (areaType == PlayerArea.LIGHTS_OUT) {
-            EspRender.unregisterAllPositions();
-        }
+        AreaEventHandler.handleAreaEnter(areaType, false);
     }
 
     private static class AreaEntry {
