@@ -123,26 +123,6 @@ public class ClientCommands {
                                         )
                                 )
                                 .then(literal("pathway")
-                                        .executes(ctx -> {
-                                            Path folder = FabricLoader.getInstance()
-                                                    .getConfigDir()
-                                                    .resolve("loreutils")
-                                                    .resolve("pathways");
-                                            StringBuilder sb = new StringBuilder("Pathways: ");
-                                            try (DirectoryStream<Path> ds = Files.newDirectoryStream(folder, "*.json")) {
-                                                for (Path f : ds) {
-                                                    Pathway p = new Gson().fromJson(Files.newBufferedReader(f), Pathway.class);
-                                                    sb.append(p.getId())
-                                                            .append(p.isEnabled() ? " &r(&aon&r), " : " &r(&coff&r), ");
-                                                }
-                                                String result = sb.toString().replaceAll(", $", "");
-                                                MessageManager.sendColored(result);
-                                            } catch (IOException e) {
-                                                MessageManager.sendColored("Error reading pathways list.");
-                                                e.printStackTrace();
-                                            }
-                                            return 1;
-                                        })
                                         .then(argument("id", word())
                                                 .executes(ctx -> {
                                                     String id = StringArgumentType.getString(ctx, "id");
@@ -339,6 +319,10 @@ public class ClientCommands {
                                 )
                                 .then(literal("cancel")
                                         .executes(ctx -> {
+                                            if (currentBuilder == null) {
+                                                MessageManager.sendColored("No pathway builder in progress.");
+                                                return 1;
+                                            }
                                             currentBuilder = null;
                                             MessageManager.sendColored("Cancelled");
                                             return 1;
@@ -346,6 +330,26 @@ public class ClientCommands {
                                 )
                         )
                         .then(literal("pathway")
+                                .executes(ctx -> {
+                                    Path folder = FabricLoader.getInstance()
+                                            .getConfigDir()
+                                            .resolve("loreutils")
+                                            .resolve("pathways");
+                                    StringBuilder sb = new StringBuilder("Pathways: ");
+                                    try (DirectoryStream<Path> ds = Files.newDirectoryStream(folder, "*.json")) {
+                                        for (Path f : ds) {
+                                            Pathway p = new Gson().fromJson(Files.newBufferedReader(f), Pathway.class);
+                                            sb.append(p.getId())
+                                                    .append(p.isEnabled() ? " &r(&aon&r), " : " &r(&coff&r), ");
+                                        }
+                                        String result = sb.toString().replaceAll(", $", "");
+                                        MessageManager.sendColored(result);
+                                    } catch (IOException e) {
+                                        MessageManager.sendColored("Error reading pathways list.");
+                                        e.printStackTrace();
+                                    }
+                                    return 1;
+                                })
                                 .then(argument("id", word())
                                         .executes(ctx -> {
                                             String id = StringArgumentType.getString(ctx, "id");
@@ -393,13 +397,6 @@ public class ClientCommands {
                         )
 
         );
-    }
-
-    private static Vec3d getVec3(CommandContext<FabricClientCommandSource> ctx, String name) {
-        @SuppressWarnings("unchecked")
-        CommandContext<ServerCommandSource> serverCtx =
-                (CommandContext<ServerCommandSource>)(CommandContext<?>)ctx;
-        return Vec3ArgumentType.getVec3(serverCtx, name);
     }
 
 }
