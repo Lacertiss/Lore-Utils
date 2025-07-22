@@ -18,7 +18,7 @@ public class AreaEventHandler {
             if (enter) {
                 ModConfig cfg = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
                 if (!cfg.AutoSolveLightsOut) return;
-                MessageManager.sendColored("Solving Lights Out: &7" + cfg.lightsOutSolverMode);
+                MessageManager.sendActionBarColored("Solving Lights Out: &7" + cfg.lightsOutSolverMode);
                 LightsOutSolver.Tile[][] grid = LightsOutInput.createGridFromLights(LightsOutInput.createLightStates());
                 List<LightsOutSolver.Pos> solution = switch (cfg.lightsOutSolverMode) {
                     case ALL_ON -> LightsOutSolver.solveAllOnOptimized(grid);

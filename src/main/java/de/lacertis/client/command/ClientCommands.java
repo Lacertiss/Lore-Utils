@@ -63,10 +63,10 @@ public class ClientCommands {
                                 .then(literal("lightsout")
                                         .executes(ctx -> {
                                             if (!PlayerArea.LIGHTS_OUT.isActive()) {
-                                                MessageManager.sendColored("You are not in a lights out area.");
+                                                MessageManager.sendChatColored("You are not in a lights out area.");
                                                 return 1;
                                             }
-                                            MessageManager.sendColored("Refreshing lights out...");
+                                            MessageManager.sendChatColored("Refreshing lights out...");
                                             LightsOutSolver.Tile[][] grid = LightsOutInput.createGridFromLights(LightsOutInput.createLightStates());
                                             ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
@@ -104,16 +104,16 @@ public class ClientCommands {
                                                                             .resolve("explain");
                                                                     Path filePath = configDir.resolve(alias + ".json");
                                                                     if (Files.exists(filePath)) {
-                                                                        MessageManager.sendColored("Error: " + alias + ".json already exists.");
+                                                                        MessageManager.sendChatColored("Error: " + alias + ".json already exists.");
                                                                         return 1;
                                                                     }
 
                                                                     Explain explain = new Explain(alias, author, message);
                                                                     try {
                                                                         FileManager.createJsonFileInSubfolder("explain", alias, explain);
-                                                                        MessageManager.sendColored("Created: " + alias + ".json");
+                                                                        MessageManager.sendChatColored("Created: " + alias + ".json");
                                                                     } catch (IOException e) {
-                                                                        MessageManager.sendColored("Error creating file.");
+                                                                        MessageManager.sendChatColored("Error creating file.");
                                                                         e.printStackTrace();
                                                                     }
                                                                     return 1;
@@ -127,7 +127,7 @@ public class ClientCommands {
                                                 .executes(ctx -> {
                                                     String id = StringArgumentType.getString(ctx, "id");
                                                     currentBuilder = new PathwayBuilder().setId(id);
-                                                    MessageManager.sendColored("Pathway builder mode started for " + id + ".");
+                                                    MessageManager.sendChatColored("Pathway builder mode started for " + id + ".");
                                                     return 1;
                                                 })
                                         )
@@ -140,7 +140,7 @@ public class ClientCommands {
                                             .resolve("loreutils")
                                             .resolve("explain");
                                     if (!Files.exists(folder)) {
-                                        MessageManager.sendColored("No explain files found.");
+                                        MessageManager.sendChatColored("No explain files found.");
                                         return 1;
                                     }
                                     try (DirectoryStream<Path> stream = Files.newDirectoryStream(folder, "*.json")) {
@@ -149,11 +149,11 @@ public class ClientCommands {
                                             sb.append(path.getFileName().toString().replace(".json", "")).append(", ");
                                         }
                                         String list = sb.toString();
-                                        MessageManager.sendColored(list.endsWith(", ")
+                                        MessageManager.sendChatColored(list.endsWith(", ")
                                                 ? list.substring(0, list.length() - 2)
                                                 : list);
                                     } catch (IOException e) {
-                                        MessageManager.sendColored("Error reading explain folder.");
+                                        MessageManager.sendChatColored("Error reading explain folder.");
                                     }
                                     return 1;
                                 })
@@ -166,14 +166,14 @@ public class ClientCommands {
                                                     .resolve("explain")
                                                     .resolve(alias + ".json");
                                             if (!Files.exists(file)) {
-                                                MessageManager.sendColored("Explain file \"" + alias + "\" not found.");
+                                                MessageManager.sendChatColored("Explain file \"" + alias + "\" not found.");
                                                 return 1;
                                             }
                                             try (Reader reader = Files.newBufferedReader(file)) {
                                                 Explain explain = new com.google.gson.Gson().fromJson(reader, Explain.class);
-                                                MessageManager.sendColored(explain.message);
+                                                MessageManager.sendChatColored(explain.message);
                                             } catch (IOException e) {
-                                                MessageManager.sendColored("Error reading explain file.");
+                                                MessageManager.sendChatColored("Error reading explain file.");
                                             }
                                             return 1;
                                         })
@@ -186,10 +186,10 @@ public class ClientCommands {
                                                     BlockPos pos = MinecraftClient.getInstance().player.getBlockPos();
                                                     if (tempLineStart == null) {
                                                         tempLineStart = pos;
-                                                        MessageManager.sendColored("Start position set to " + pos + ".");
+                                                        MessageManager.sendChatColored("Start position set to " + pos + ".");
                                                     } else {
                                                         currentBuilder.addElement(new PathwayElement(PathwayType.LINE, tempLineStart, pos));
-                                                        MessageManager.sendColored("Line added from " + tempLineStart + " to " + pos + ".");
+                                                        MessageManager.sendChatColored("Line added from " + tempLineStart + " to " + pos + ".");
                                                         tempLineStart = null;
                                                     }
                                                     return 1;
@@ -210,7 +210,7 @@ public class ClientCommands {
                                                                                                     BlockPos bs = new BlockPos((int) sx, (int) sy, (int) sz);
                                                                                                     BlockPos be = new BlockPos((int) ex, (int) ey, (int) ez);
                                                                                                     currentBuilder.addElement(new PathwayElement(PathwayType.LINE, bs, be));
-                                                                                                    MessageManager.sendColored("Line added from " + bs + " to " + be + ".");
+                                                                                                    MessageManager.sendChatColored("Line added from " + bs + " to " + be + ".");
                                                                                                     return 1;
                                                                                                 })
                                                                                         )
@@ -224,7 +224,7 @@ public class ClientCommands {
                                                 .executes(ctx -> {
                                                     BlockPos bp = MinecraftClient.getInstance().player.getBlockPos();
                                                     currentBuilder.addElement(new PathwayElement(PathwayType.BLOCK_HIGHLIGHT, bp, null));
-                                                    MessageManager.sendColored("Block highlight added at " + bp + ".");
+                                                    MessageManager.sendChatColored("Block highlight added at " + bp + ".");
                                                     return 1;
                                                 })
                                                 .then(argument("x", DoubleArgumentType.doubleArg())
@@ -236,7 +236,7 @@ public class ClientCommands {
                                                                             double z = DoubleArgumentType.getDouble(ctx, "z");
                                                                             BlockPos bp = new BlockPos((int) x, (int) y, (int) z);
                                                                             currentBuilder.addElement(new PathwayElement(PathwayType.BLOCK_HIGHLIGHT, bp, null));
-                                                                            MessageManager.sendColored("Block highlight added at " + bp + ".");
+                                                                            MessageManager.sendChatColored("Block highlight added at " + bp + ".");
                                                                             return 1;
                                                                         })
                                                                 )
@@ -254,7 +254,7 @@ public class ClientCommands {
                                                             .resolve("pathways");
                                                     Path file = folder.resolve(id + ".json");
                                                     if (!Files.exists(file)) {
-                                                        MessageManager.sendColored("Pathway " + id + " not found.");
+                                                        MessageManager.sendChatColored("Pathway " + id + " not found.");
                                                         return 1;
                                                     }
                                                     try {
@@ -264,9 +264,9 @@ public class ClientCommands {
                                                         try (Writer w = Files.newBufferedWriter(file)) {
                                                             new GsonBuilder().setPrettyPrinting().create().toJson(p, w);
                                                         }
-                                                        MessageManager.sendColored("Pathway " + id + " enabled.");
+                                                        MessageManager.sendChatColored("Pathway " + id + " enabled.");
                                                     } catch (IOException e) {
-                                                        MessageManager.sendColored("Error enabling pathway " + id + ".");
+                                                        MessageManager.sendChatColored("Error enabling pathway " + id + ".");
                                                         e.printStackTrace();
                                                     }
                                                     return 1;
@@ -283,7 +283,7 @@ public class ClientCommands {
                                                             .resolve("pathways");
                                                     Path file = folder.resolve(id + ".json");
                                                     if (!Files.exists(file)) {
-                                                        MessageManager.sendColored("Pathway " + id + " not found.");
+                                                        MessageManager.sendChatColored("Pathway " + id + " not found.");
                                                         return 1;
                                                     }
                                                     try {
@@ -293,9 +293,9 @@ public class ClientCommands {
                                                         try (Writer w = Files.newBufferedWriter(file)) {
                                                             new GsonBuilder().setPrettyPrinting().create().toJson(p, w);
                                                         }
-                                                        MessageManager.sendColored("Pathway " + id + " disabled.");
+                                                        MessageManager.sendChatColored("Pathway " + id + " disabled.");
                                                     } catch (IOException e) {
-                                                        MessageManager.sendColored("Error disabling pathway " + id + ".");
+                                                        MessageManager.sendChatColored("Error disabling pathway " + id + ".");
                                                         e.printStackTrace();
                                                     }
                                                     return 1;
@@ -307,12 +307,12 @@ public class ClientCommands {
                                             currentBuilder.build().ifPresentOrElse(p -> {
                                                 try {
                                                     FileManager.createJsonFileInSubfolder("pathways", p.getId(), p);
-                                                    MessageManager.sendColored("Pathway " + p.getId() + " created.");
+                                                    MessageManager.sendChatColored("Pathway " + p.getId() + " created.");
                                                 } catch (IOException e) {
-                                                    MessageManager.sendColored("Error creating pathway " + p.getId() + ".");
+                                                    MessageManager.sendChatColored("Error creating pathway " + p.getId() + ".");
                                                     e.printStackTrace();
                                                 }
-                                            }, () -> MessageManager.sendColored("No pathway to finish."));
+                                            }, () -> MessageManager.sendChatColored("No pathway to finish."));
                                             currentBuilder = null;
                                             return 1;
                                         })
@@ -320,11 +320,11 @@ public class ClientCommands {
                                 .then(literal("cancel")
                                         .executes(ctx -> {
                                             if (currentBuilder == null) {
-                                                MessageManager.sendColored("No pathway builder in progress.");
+                                                MessageManager.sendChatColored("No pathway builder in progress.");
                                                 return 1;
                                             }
                                             currentBuilder = null;
-                                            MessageManager.sendColored("Cancelled");
+                                            MessageManager.sendChatColored("Cancelled");
                                             return 1;
                                         })
                                 )
@@ -343,9 +343,9 @@ public class ClientCommands {
                                                     .append(p.isEnabled() ? " &r(&aon&r), " : " &r(&coff&r), ");
                                         }
                                         String result = sb.toString().replaceAll(", $", "");
-                                        MessageManager.sendColored(result);
+                                        MessageManager.sendChatColored(result);
                                     } catch (IOException e) {
-                                        MessageManager.sendColored("Error reading pathways list.");
+                                        MessageManager.sendChatColored("Error reading pathways list.");
                                         e.printStackTrace();
                                     }
                                     return 1;
@@ -359,7 +359,7 @@ public class ClientCommands {
                                                     .resolve("pathways");
                                             Path file = folder.resolve(id + ".json");
                                             if (!Files.exists(file)) {
-                                                MessageManager.sendColored("Pathway " + id + " not found.");
+                                                MessageManager.sendChatColored("Pathway " + id + " not found.");
                                                 return 1;
                                             }
                                             try (Reader reader = Files.newBufferedReader(file)) {
@@ -383,12 +383,12 @@ public class ClientCommands {
                                                             EspRender.registerPosition(e.getPos1());
                                                         }
                                                     }
-                                                    MessageManager.sendColored("Pathway " + id + " rendered.");
+                                                    MessageManager.sendChatColored("Pathway " + id + " rendered.");
                                                 } else {
-                                                    MessageManager.sendColored("Pathway " + id + " is disabled.");
+                                                    MessageManager.sendChatColored("Pathway " + id + " is disabled.");
                                                 }
                                             } catch (IOException e) {
-                                                MessageManager.sendColored("Error loading pathway " + id + ".");
+                                                MessageManager.sendChatColored("Error loading pathway " + id + ".");
                                                 e.printStackTrace();
                                             }
                                             return 1;

@@ -3,6 +3,7 @@ package de.lacertis.client;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -11,10 +12,26 @@ import net.minecraft.util.Formatting;
 public class MessageManager {
     private static final String PREFIX = "&8[&bLoreUtils&8] &r";
 
-    public static void sendColored(String message) {
+    public static void sendChatColored(String message) {
         if (MinecraftClient.getInstance().player != null) {
             MutableText text = parseColorCodes(PREFIX + message);
-            MinecraftClient.getInstance().player.sendMessage(text, false);
+            MinecraftClient.getInstance().player.sendMessage(text, false); // Chat
+        }
+    }
+
+    public static void sendActionBarColored(String message) {
+        if (MinecraftClient.getInstance().player != null) {
+            MutableText text = parseColorCodes(PREFIX + message);
+            MinecraftClient.getInstance().player.sendMessage(text, true); // ActionBar
+        }
+    }
+
+    public static void sendTitleColored(String message) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.player != null) {
+            MutableText text = parseColorCodes(PREFIX + message);
+            InGameHud hud = client.inGameHud;
+            hud.setTitle(text);
         }
     }
 
