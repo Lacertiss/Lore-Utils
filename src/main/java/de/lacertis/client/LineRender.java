@@ -18,8 +18,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class LineRender {
     private static final List<Line> LINES = new CopyOnWriteArrayList<>();
 
-    public void init() {
-        WorldRenderEvents.AFTER_TRANSLUCENT.register(this::onRender);
+    public static void init() {
+        WorldRenderEvents.AFTER_TRANSLUCENT.register(LineRender::onRender);
     }
 
     public static void uninit() {
@@ -38,7 +38,7 @@ public class LineRender {
         LINES.clear();
     }
 
-    private void onRender(WorldRenderContext context) {
+    private static void onRender(WorldRenderContext context) {
         VertexConsumerProvider provider = context.consumers();
         if (provider == null) return;
 

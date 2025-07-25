@@ -53,8 +53,7 @@ public class LightsOutInput {
         }
         var blockPos = new net.minecraft.util.math.BlockPos(x, y, z);
         var blockState = client.world.getBlockState(blockPos);
-        return blockState.getBlock() instanceof net.minecraft.block.RedstoneLampBlock
-                && blockState.get(net.minecraft.state.property.Properties.LIT);
+        return blockState.getBlock() instanceof net.minecraft.block.RedstoneLampBlock && blockState.get(net.minecraft.state.property.Properties.LIT);
     }
 
 }

@@ -14,9 +14,6 @@
 	"icon": "assets/loreutils/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"main": [
-			"de.lacertis.LoreUtils"
-		],
 		"fabric-datagen": [
 			"de.lacertis.LoreUtilsDataGenerator"
 		],

@@ -15,30 +15,6 @@ public class LightsOutSolver {
         }
     }
 
-    private static void toggleIfExists(Tile[][] grid, int x, int y) {
-        if (x >= 0 && x < grid.length && y >= 0 && y < grid[x].length && grid[x][y].isTrigger) {
-            grid[x][y].isLit = !grid[x][y].isLit;
-        }
-    }
-
-    public static void toggleNeighbors(Tile[][] grid, int x, int y) {
-        int[][] dirs = { {0,0}, {-1,0}, {1,0}, {0,-1}, {0,1} };
-        for (int[] d : dirs) {
-            toggleIfExists(grid, x + d[0], y + d[1]);
-        }
-    }
-
-    private static Tile[][] deepCopyGrid(Tile[][] grid) {
-        Tile[][] copy = new Tile[grid.length][grid[0].length];
-        for (int x = 0; x < grid.length; x++) {
-            for (int y = 0; y < grid[x].length; y++) {
-                Tile t = grid[x][y];
-                copy[x][y] = new Tile(t.isTrigger, t.isLit);
-            }
-        }
-        return copy;
-    }
-
     public static List<Pos> solveFullGrid(Tile[][] grid, int[][] targetGrid) {
         List<Pos> triggers = new ArrayList<>();
         for (int x = 0; x < 7; x++)

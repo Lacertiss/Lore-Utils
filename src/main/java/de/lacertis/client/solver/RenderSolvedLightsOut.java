@@ -35,11 +35,7 @@ public class RenderSolvedLightsOut {
         for (LightsOutSolver.Pos move : positions) {
             LightsOutCoords coord = mapping.get(move);
             if (coord != null) {
-                BlockPos pos = new BlockPos(
-                        (int) coord.getX(),
-                        (int) coord.getY() + 1,
-                        (int) coord.getZ()
-                );
+                BlockPos pos = new BlockPos((int) coord.getX(), (int) coord.getY() + 1, (int) coord.getZ());
                 EspRender.registerPosition(pos);
                 highlights.add(pos);
             }
