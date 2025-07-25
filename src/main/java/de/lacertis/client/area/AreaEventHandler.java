@@ -17,7 +17,7 @@ public class AreaEventHandler {
         if (areaType == PlayerArea.LIGHTS_OUT) {
             if (enter) {
                 ModConfig cfg = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
-                if (!cfg.AutoSolveLightsOut) return;
+                if (!cfg.autoSolveLightsOut) return;
                 MessageManager.sendActionBarColored("Solving Lights Out: &7" + cfg.lightsOutSolverMode);
                 LightsOutSolver.Tile[][] grid = LightsOutInput.createGridFromLights(LightsOutInput.createLightStates());
                 List<LightsOutSolver.Pos> solution = switch (cfg.lightsOutSolverMode) {
@@ -34,6 +34,9 @@ public class AreaEventHandler {
 
         if (areaType == PlayerArea.ANUAR_GEM) {
             if (enter) {
+                ModConfig cfg = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+                if (!cfg.autoMarkAnuarButtons) return;
+                MessageManager.sendActionBarColored("Marking Anuar Gem Buttons...");
                 EspRender.registerPosition(Coordinate.ANUAR_1.getPos());
                 EspRender.registerPosition(Coordinate.ANUAR_2.getPos());
                 EspRender.registerPosition(Coordinate.ANUAR_3.getPos());
