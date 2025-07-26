@@ -1,8 +1,8 @@
-package de.lacertis.client;
+package de.lacertis.loreutils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import de.lacertis.client.config.LoreModConfig;
-import de.lacertis.client.config.ConfigTranslator;
+import de.lacertis.loreutils.config.ModConfig;
+import de.lacertis.loreutils.config.ConfigTranslator;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
@@ -49,7 +49,7 @@ public class EspRender {
             matrices.push();
             matrices.translate(-camX, -camY, -camZ);
 
-            LoreModConfig config = AutoConfig.getConfigHolder(LoreModConfig.class).getConfig();
+            ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
             int color = config.primaryColor;
             float[] rgb = ConfigTranslator.translate(color);
             float alpha = ConfigTranslator.translateAlpha(config.alphaPercentage);

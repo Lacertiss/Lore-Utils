@@ -1,4 +1,4 @@
-package de.lacertis.client.solver;
+package de.lacertis.loreutils.solver;
 
 public class LightsOutInput {
 

@@ -1,9 +1,7 @@
-package de.lacertis.client.area;
+package de.lacertis.loreutils.area;
 
-import de.lacertis.client.EspRender;
-import de.lacertis.client.PlayerArea;
+import de.lacertis.loreutils.PlayerArea;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 

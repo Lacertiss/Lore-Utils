@@ -1,4 +1,4 @@
-package de.lacertis.client.data;
+package de.lacertis.loreutils.data;
 
 public class Explain {
     public String alias;

@@ -1,4 +1,4 @@
-package de.lacertis.client;
+package de.lacertis.loreutils;
 
 public enum PlayerArea {
     NONE,

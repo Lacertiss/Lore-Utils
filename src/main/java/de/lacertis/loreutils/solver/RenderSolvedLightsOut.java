@@ -1,6 +1,6 @@
-package de.lacertis.client.solver;
+package de.lacertis.loreutils.solver;
 
-import de.lacertis.client.EspRender;
+import de.lacertis.loreutils.EspRender;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.util.math.BlockPos;
 

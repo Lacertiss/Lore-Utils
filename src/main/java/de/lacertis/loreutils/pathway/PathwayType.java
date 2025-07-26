@@ -1,4 +1,4 @@
-package de.lacertis.client.pathway;
+package de.lacertis.loreutils.pathway;
 
 public enum PathwayType {
     LINE,

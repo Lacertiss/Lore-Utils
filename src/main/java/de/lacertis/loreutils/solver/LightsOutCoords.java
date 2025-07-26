@@ -1,4 +1,4 @@
-package de.lacertis.client.solver;
+package de.lacertis.loreutils.solver;
 
 public enum LightsOutCoords {
     LIGHTS_OUT_COORD_1(-11259.5, 34, 12683.5),

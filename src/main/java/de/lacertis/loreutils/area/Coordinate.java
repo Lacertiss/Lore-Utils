@@ -1,4 +1,4 @@
-package de.lacertis.client.area;
+package de.lacertis.loreutils.area;
 
 import net.minecraft.util.math.BlockPos;
 

@@ -21,7 +21,7 @@
 			"de.lacertis.LoreUtilsClient"
 		],
 		"modmenu": [
-			"de.lacertis.client.config.LoreConfiguration"
+			"de.lacertis.loreutils.config.Configuration"
 		]
 	},
 	"mixins": [

@@ -1,12 +1,12 @@
-package de.lacertis.client.area;
+package de.lacertis.loreutils.area;
 
-import de.lacertis.client.EspRender;
-import de.lacertis.client.MessageManager;
-import de.lacertis.client.PlayerArea;
-import de.lacertis.client.config.LoreModConfig;
-import de.lacertis.client.solver.LightsOutInput;
-import de.lacertis.client.solver.LightsOutSolver;
-import de.lacertis.client.solver.RenderSolvedLightsOut;
+import de.lacertis.loreutils.EspRender;
+import de.lacertis.loreutils.MessageManager;
+import de.lacertis.loreutils.PlayerArea;
+import de.lacertis.loreutils.config.ModConfig;
+import de.lacertis.loreutils.solver.LightsOutInput;
+import de.lacertis.loreutils.solver.LightsOutSolver;
+import de.lacertis.loreutils.solver.RenderSolvedLightsOut;
 import me.shedaniel.autoconfig.AutoConfig;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class AreaEventHandler {
     public static void handleAreaEnter(PlayerArea areaType, boolean enter) {
         if (areaType == PlayerArea.LIGHTS_OUT) {
             if (enter) {
-                LoreModConfig cfg = AutoConfig.getConfigHolder(LoreModConfig.class).getConfig();
+                ModConfig cfg = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
                 if (!cfg.autoSolveLightsOut) return;
                 MessageManager.sendActionBarColored("Solving Lights Out: &7" + cfg.lightsOutSolverMode);
                 LightsOutSolver.Tile[][] grid = LightsOutInput.createGridFromLights(LightsOutInput.createLightStates());
@@ -34,7 +34,7 @@ public class AreaEventHandler {
 
         if (areaType == PlayerArea.ANUAR_GEM) {
             if (enter) {
-                LoreModConfig cfg = AutoConfig.getConfigHolder(LoreModConfig.class).getConfig();
+                ModConfig cfg = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
                 if (!cfg.autoMarkAnuarButtons) return;
                 MessageManager.sendActionBarColored("Marking Anuar Gem Buttons...");
                 EspRender.registerPosition(Coordinate.ANUAR_1.getPos());

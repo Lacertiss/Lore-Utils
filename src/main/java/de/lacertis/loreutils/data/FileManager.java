@@ -1,4 +1,4 @@
-package de.lacertis.client.data;
+package de.lacertis.loreutils.data;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

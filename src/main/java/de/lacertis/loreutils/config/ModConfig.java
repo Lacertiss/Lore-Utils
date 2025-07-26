@@ -1,13 +1,13 @@
-package de.lacertis.client.config;
+package de.lacertis.loreutils.config;
 
-import de.lacertis.client.solver.LightsOutSolverMode;
+import de.lacertis.loreutils.solver.LightsOutSolverMode;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @Config(name = "loreutils")
 @Config.Gui.Background("minecraft:textures/block/dark_prismarine.png")
-public class LoreModConfig implements ConfigData {
+public class ModConfig implements ConfigData {
     @ConfigEntry.Category("appearance")
     @ConfigEntry.ColorPicker
     @ConfigEntry.Gui.Tooltip

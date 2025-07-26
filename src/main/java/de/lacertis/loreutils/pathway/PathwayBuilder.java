@@ -1,9 +1,9 @@
-package de.lacertis.client.pathway;
+package de.lacertis.loreutils.pathway;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import de.lacertis.client.data.Pathway;
+import de.lacertis.loreutils.data.Pathway;
 
 public class PathwayBuilder {
     private String id;

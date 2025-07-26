@@ -1,8 +1,8 @@
-package de.lacertis.client.data;
+package de.lacertis.loreutils.data;
 
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
-import de.lacertis.client.pathway.PathwayElement;
+import de.lacertis.loreutils.pathway.PathwayElement;
 
 public class Pathway {
     @SerializedName("id")

@@ -1,4 +1,4 @@
-package de.lacertis.client.command;
+package de.lacertis.loreutils.command;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,17 +6,17 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import de.lacertis.client.EspRender;
-import de.lacertis.client.LineRender;
-import de.lacertis.client.MessageManager;
-import de.lacertis.client.config.ConfigTranslator;
-import de.lacertis.client.config.LoreModConfig;
-import de.lacertis.client.data.Explain;
-import de.lacertis.client.data.FileManager;
-import de.lacertis.client.data.Pathway;
-import de.lacertis.client.pathway.PathwayBuilder;
-import de.lacertis.client.pathway.PathwayElement;
-import de.lacertis.client.pathway.PathwayType;
+import de.lacertis.loreutils.EspRender;
+import de.lacertis.loreutils.LineRender;
+import de.lacertis.loreutils.MessageManager;
+import de.lacertis.loreutils.config.ConfigTranslator;
+import de.lacertis.loreutils.config.ModConfig;
+import de.lacertis.loreutils.data.Explain;
+import de.lacertis.loreutils.data.FileManager;
+import de.lacertis.loreutils.data.Pathway;
+import de.lacertis.loreutils.pathway.PathwayBuilder;
+import de.lacertis.loreutils.pathway.PathwayElement;
+import de.lacertis.loreutils.pathway.PathwayType;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
@@ -347,7 +347,7 @@ public class ClientCommands {
                                 LineRender.unregisterAllLines();
                                 EspRender.unregisterAllPositions();
 
-                                LoreModConfig config = AutoConfig.getConfigHolder(LoreModConfig.class).getConfig();
+                                ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
                                 int color = config.primaryColor;
                                 float[] rgb = ConfigTranslator.translate(color);
                                 float alpha = ConfigTranslator.translateAlpha(config.alphaPercentage);

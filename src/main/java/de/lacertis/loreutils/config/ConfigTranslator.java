@@ -1,4 +1,4 @@
-package de.lacertis.client.config;
+package de.lacertis.loreutils.config;
 
 public class ConfigTranslator {
     public static float[] translate(int color) {
