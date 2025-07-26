@@ -7,7 +7,7 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
 @Config(name = "loreutils")
 @Config.Gui.Background("minecraft:textures/block/dark_prismarine.png")
-public class ModConfig implements ConfigData {
+public class LoreModConfig implements ConfigData {
     @ConfigEntry.Category("appearance")
     @ConfigEntry.ColorPicker
     @ConfigEntry.Gui.Tooltip

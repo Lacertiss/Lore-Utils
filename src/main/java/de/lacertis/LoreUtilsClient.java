@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import de.lacertis.client.*;
 import de.lacertis.client.area.AreaChecker;
 import de.lacertis.client.command.ClientCommands;
-import de.lacertis.client.config.ModConfig;
+import de.lacertis.client.config.LoreModConfig;
 import de.lacertis.client.data.Pathway;
 import de.lacertis.client.pathway.PathwayConfig;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -33,7 +33,7 @@ public class LoreUtilsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new);
+        AutoConfig.register(LoreModConfig.class, Toml4jConfigSerializer::new);
         ClientCommands.register();
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {

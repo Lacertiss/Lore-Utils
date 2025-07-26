@@ -1,6 +1,6 @@
 package de.lacertis.client;
 
-import de.lacertis.client.config.ModConfig;
+import de.lacertis.client.config.LoreModConfig;
 import de.lacertis.client.config.ConfigTranslator;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
@@ -47,7 +47,7 @@ public class LineRender {
         VertexConsumer consumer = provider.getBuffer(RenderLayer.getLines());
         Matrix4f mat = ms.peek().getPositionMatrix();
 
-        ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        LoreModConfig config = AutoConfig.getConfigHolder(LoreModConfig.class).getConfig();
         int color = config.primaryColor;
         float[] rgb = ConfigTranslator.translate(color);
         float globalAlpha = ConfigTranslator.translateAlpha(config.alphaPercentage);

@@ -10,7 +10,7 @@ import de.lacertis.client.EspRender;
 import de.lacertis.client.LineRender;
 import de.lacertis.client.MessageManager;
 import de.lacertis.client.config.ConfigTranslator;
-import de.lacertis.client.config.ModConfig;
+import de.lacertis.client.config.LoreModConfig;
 import de.lacertis.client.data.Explain;
 import de.lacertis.client.data.FileManager;
 import de.lacertis.client.data.Pathway;
@@ -347,7 +347,7 @@ public class ClientCommands {
                                 LineRender.unregisterAllLines();
                                 EspRender.unregisterAllPositions();
 
-                                ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+                                LoreModConfig config = AutoConfig.getConfigHolder(LoreModConfig.class).getConfig();
                                 int color = config.primaryColor;
                                 float[] rgb = ConfigTranslator.translate(color);
                                 float alpha = ConfigTranslator.translateAlpha(config.alphaPercentage);
