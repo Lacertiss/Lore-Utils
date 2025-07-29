@@ -1,6 +1,6 @@
 package de.lacertis.loreutils.config;
 
-import de.lacertis.loreutils.solver.LightsOutSolverMode;
+import de.lacertis.loreutils.solver.lightsout.LightsOutSolverMode;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -30,5 +30,13 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Category("lightsout")
     @ConfigEntry.Gui.Tooltip
     public boolean autoMarkAnuarButtons = true;
+
+    @ConfigEntry.Category("ingenuity")
+    @ConfigEntry.Gui.Tooltip
+    public boolean ingenuityTip = true;
+
+    @ConfigEntry.Category("ingenuity")
+    @ConfigEntry.Gui.Tooltip
+    public boolean ingenuityDebug = false;
 }
 

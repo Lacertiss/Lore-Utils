@@ -1,6 +1,6 @@
-package de.lacertis.loreutils.solver;
+package de.lacertis.loreutils.solver.lightsout;
 
-public class LightsOutInput {
+public class Input {
 
     public static final boolean[][] triggerLayout = {
             {false, true, false, true, false, true, false},
@@ -12,11 +12,11 @@ public class LightsOutInput {
             {false, true, false, true, false, true, false}
     };
 
-    public static LightsOutSolver.Tile[][] createGridFromLights(boolean[][] lightStates) {
-        LightsOutSolver.Tile[][] grid = new LightsOutSolver.Tile[7][7];
+    public static Solver.Tile[][] createGridFromLights(boolean[][] lightStates) {
+        Solver.Tile[][] grid = new Solver.Tile[7][7];
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                grid[x][y] = new LightsOutSolver.Tile(triggerLayout[x][y], lightStates[x][y]);
+                grid[x][y] = new Solver.Tile(triggerLayout[x][y], lightStates[x][y]);
             }
         }
         return grid;
@@ -24,12 +24,12 @@ public class LightsOutInput {
 
     public static boolean[][] createLightStates() {
         boolean[][] lightStates = new boolean[7][7];
-        LightsOutCoords[] coords = LightsOutCoords.values();
+        Coords[] coords = Coords.values();
         int idx = 0;
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
                 if (triggerLayout[x][y]) {
-                    LightsOutCoords c = coords[idx++];
+                    Coords c = coords[idx++];
                     int bx = (int) c.getX();
                     int by = (int) c.getY();
                     int bz = (int) c.getZ();

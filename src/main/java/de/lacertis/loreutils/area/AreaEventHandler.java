@@ -4,10 +4,12 @@ import de.lacertis.loreutils.EspRender;
 import de.lacertis.loreutils.MessageManager;
 import de.lacertis.loreutils.PlayerArea;
 import de.lacertis.loreutils.config.ModConfig;
-import de.lacertis.loreutils.solver.LightsOutInput;
-import de.lacertis.loreutils.solver.LightsOutSolver;
-import de.lacertis.loreutils.solver.RenderSolvedLightsOut;
+import de.lacertis.loreutils.solver.Ingenuity.*;
+import de.lacertis.loreutils.solver.lightsout.Input;
+import de.lacertis.loreutils.solver.lightsout.Solver;
+import de.lacertis.loreutils.solver.lightsout.RenderSolvedLightsOut;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
 
@@ -19,11 +21,11 @@ public class AreaEventHandler {
                 ModConfig cfg = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
                 if (!cfg.autoSolveLightsOut) return;
                 MessageManager.sendActionBarColored("Solving Lights Out: &7" + cfg.lightsOutSolverMode);
-                LightsOutSolver.Tile[][] grid = LightsOutInput.createGridFromLights(LightsOutInput.createLightStates());
-                List<LightsOutSolver.Pos> solution = switch (cfg.lightsOutSolverMode) {
-                    case ALL_ON -> LightsOutSolver.solveAllOnOptimized(grid);
-                    case ALL_OFF -> LightsOutSolver.solveAllOffOptimized(grid);
-                    case STRENGTH -> LightsOutSolver.solveStrengthOptimized(grid);
+                Solver.Tile[][] grid = Input.createGridFromLights(Input.createLightStates());
+                List<Solver.Pos> solution = switch (cfg.lightsOutSolverMode) {
+                    case ALL_ON -> Solver.solveAllOnOptimized(grid);
+                    case ALL_OFF -> Solver.solveAllOffOptimized(grid);
+                    case STRENGTH -> Solver.solveStrengthOptimized(grid);
                 };
                 RenderSolvedLightsOut.renderSolution(solution);
             } else {
@@ -41,6 +43,32 @@ public class AreaEventHandler {
                 EspRender.registerPosition(Coordinate.ANUAR_2.getPos());
                 EspRender.registerPosition(Coordinate.ANUAR_3.getPos());
                 EspRender.registerPosition(Coordinate.ANUAR_4.getPos());
+            } else {
+                EspRender.unregisterAllPositions();
+            }
+        }
+
+        if (areaType == PlayerArea.INGENUITY) {
+            if (enter) {
+                ModConfig cfg = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+                if (!cfg.ingenuityTip) return;
+
+                IngenuityPerms d = PermutationsStorage.loadOrDefault();
+                boolean ready = PermutationsStorage.permsReady(d);
+                Goal goal = PatternGoalIO.loadOrCreateDefault();
+
+                if (!ready) {
+                    MessageManager.sendActionBarColored("Ingenuity: &cPerms not learned. Use &e/lore ingenuity calibrate&c.");
+                } else if (goal == null) {
+                    MessageManager.sendActionBarColored("Ingenuity: &cNo goal configured.");
+                } else {
+                    MessageManager.sendActionBarColored("Ingenuity: &aReady. Use &b/lore ingenuity solve&a.");
+                }
+
+                EspRender.unregisterAllPositions();
+                EspRender.registerPosition(new BlockPos(-12156, 72, 12579));
+                EspRender.registerPosition(new BlockPos(-12180, 72, 12579));
+                EspRender.registerPosition(new BlockPos(-12204, 72, 12579));
             } else {
                 EspRender.unregisterAllPositions();
             }

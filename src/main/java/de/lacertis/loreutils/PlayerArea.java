@@ -1,9 +1,9 @@
 package de.lacertis.loreutils;
 
 public enum PlayerArea {
-    NONE,
     LIGHTS_OUT,
-    ANUAR_GEM;
+    ANUAR_GEM,
+    INGENUITY;
 
     private boolean active;
 

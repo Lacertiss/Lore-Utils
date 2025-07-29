@@ -7,9 +7,13 @@ import de.lacertis.loreutils.command.ClientCommands;
 import de.lacertis.loreutils.config.ModConfig;
 import de.lacertis.loreutils.data.Pathway;
 import de.lacertis.loreutils.pathway.PathwayConfig;
+import de.lacertis.loreutils.solver.Ingenuity.CalibService;
+import de.lacertis.loreutils.solver.Ingenuity.IngenuityInput;
+import de.lacertis.loreutils.solver.Ingenuity.IngenuityPlanRunner;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.math.Box;
@@ -26,6 +30,7 @@ import java.nio.file.Path;
 import java.util.Locale;
 
 public class LoreUtilsClient implements ClientModInitializer {
+    public static final IngenuityPlanRunner ingenuityPlanRunner = new IngenuityPlanRunner(new IngenuityInput());
 
     private static final Logger LOGGER = LogManager.getLogger("LoreUtils");
     private static final String BASE_DOMAIN = "pvplegacy.net";
@@ -54,6 +59,15 @@ public class LoreUtilsClient implements ClientModInitializer {
                 activeForServer = false;
             }
         });
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (CalibService.get().isRunning()) {
+                CalibService.get().tick();
+            }
+            if (ingenuityPlanRunner.isRunning()) {
+                ingenuityPlanRunner.tick();
+            }
+        });
     }
 
     private String extractHost(SocketAddress address) {
@@ -75,6 +89,7 @@ public class LoreUtilsClient implements ClientModInitializer {
 
         AreaChecker.addArea(new Box(-11213, 35, 12646.5, -11261, 60, 12692), PlayerArea.LIGHTS_OUT);
         AreaChecker.addArea(new Box(-11100.5, 1, 12621.5, -11400.5, 70, 12100.5), PlayerArea.ANUAR_GEM);
+        AreaChecker.addArea(new Box(-12127, 50, 12590, -12232, 80, 12570), PlayerArea.INGENUITY);
 
         EspRender.init();
         AreaChecker.init();
@@ -93,7 +108,8 @@ public class LoreUtilsClient implements ClientModInitializer {
         Path folder = FabricLoader.getInstance()
                 .getConfigDir()
                 .resolve("loreutils")
-                .resolve("pathways");
+                .resolve("pathways")
+                .resolve("ingenuity");
 
         if (!Files.isDirectory(folder)) {
             return;

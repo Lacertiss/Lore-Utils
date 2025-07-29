@@ -12,5 +12,11 @@
   "text.autoconfig.loreutils.option.lightsOutSolverMode": "Solver Mode",
   "text.autoconfig.loreutils.option.lightsOutSolverMode.@Tooltip": "Choose how the solver behaves: All On, All Off, or Strength",
   "text.autoconfig.loreutils.option.autoMarkAnuarButtons": "Auto Mark Anuar Buttons",
-  "text.autoconfig.loreutils.option.autoMarkAnuarButtons.@Tooltip": "Choose whether to automatically mark Anuar buttons when you enter the room."
+  "text.autoconfig.loreutils.option.autoMarkAnuarButtons.@Tooltip": "Choose whether to automatically mark Anuar buttons when you enter the room.",
+
+  "text.autoconfig.loreutils.category.ingenuity": "Ingenuity",
+  "text.autoconfig.loreutils.option.ingenuityTip": "Ingenuity Tips",
+  "text.autoconfig.loreutils.option.ingenuityTip.@Tooltip": "Choose whether to show Ingenuity tips.",
+  "text.autoconfig.loreutils.option.ingenuityDebug": "Debug Mode",
+  "text.autoconfig.loreutils.option.ingenuityDebug.@Tooltip": "Choose whether to enable debug mode for Ingenuity. This will show additional information to help solve issues/bugs."
 }

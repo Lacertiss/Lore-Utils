@@ -6,6 +6,7 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import de.lacertis.LoreUtilsClient;
 import de.lacertis.loreutils.EspRender;
 import de.lacertis.loreutils.LineRender;
 import de.lacertis.loreutils.MessageManager;
@@ -17,6 +18,7 @@ import de.lacertis.loreutils.data.Pathway;
 import de.lacertis.loreutils.pathway.PathwayBuilder;
 import de.lacertis.loreutils.pathway.PathwayElement;
 import de.lacertis.loreutils.pathway.PathwayType;
+import de.lacertis.loreutils.solver.Ingenuity.*;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
@@ -432,6 +434,87 @@ public class ClientCommands {
                 .then(pathwayEnableCmd)
                 .then(pathwayDisableCmd);
 
+        var ingenuityCalibrateCmd = literal("calibrate")
+                .executes(ctx -> {
+                    boolean started = CalibService.get().start();
+                    if (started) return ok("Ingenuity calibration started. Perform EAST/WEST/LECTERN changes.");
+                    return info("Calibration already running.");
+                });
+
+        var ingenuityStopCmd = literal("stop")
+                .executes(ctx -> {
+                    if (CalibService.get().isRunning()) {
+                        CalibService.get().stop();
+                        return ok("Calibration stopped.");
+                    }
+                    return info("Calibration is not running.");
+                });
+
+        var ingenuityStatusCmd = literal("status")
+                .executes(ctx -> {
+                    String s = CalibService.get().status();
+                    return info("%s", s);
+                });
+
+        var ingenuityResetCmd = literal("reset")
+                .executes(ctx -> {
+                    CalibService.get().markStale();
+                    CalibService.get().resetSessions();
+                    return ok("Marked permutations as stale and cleared sessions. Use /lore ingenuity calibrate to re-learn.");
+                });
+
+        var ingenuitySolveCmd = literal("solve")
+                .executes(ctx -> {
+                    IngenuityPerms d = PermutationsStorage.loadOrDefault();
+                    if (!PermutationsStorage.permsReady(d)) {
+                        MessageManager.sendChatColored("&cIngenuity: Perms not learned. Run &e/lore ingenuity calibrate&c.");
+                        return Command.SINGLE_SUCCESS;
+                    }
+
+                    Goal goal = PatternGoalIO.loadOrCreateDefault();
+                    if (goal == null) {
+                        MessageManager.sendChatColored("&eIngenuity: No goal configured. Create &fconfig/loreutils/ingenuity/goal_pattern.json&e.");
+                        return Command.SINGLE_SUCCESS;
+                    }
+
+                    Tile[] start = null;
+                    try {
+                        start = new IngenuityInput().readStableSnapshot(2, 1500, 50);
+                    } catch (Exception e) {
+                        MessageManager.sendChatColored("&cIngenuity: Could not read stable snapshot.");
+                        return Command.SINGLE_SUCCESS;
+                    }
+
+                    if (goal.isSatisfied(start)) {
+                        MessageManager.sendChatColored("&aIngenuity: Already solved — nothing to do.");
+                        return Command.SINGLE_SUCCESS;
+                    }
+
+                    List<Move> path = new IngenuitySolver().solve(start, goal, d, 100_000);
+                    if (path == null || path.isEmpty()) {
+                        MessageManager.sendChatColored("&cIngenuity: No path found.");
+                        return Command.SINGLE_SUCCESS;
+                    }
+
+                    List<PlanUtils.Run> runs = PlanUtils.compress(path);
+                    MessageManager.sendChatColored("&bIngenuity: Plan &7(" + runs.size() + " steps)&b ready. Starting preview…");
+
+                    if (LoreUtilsClient.ingenuityPlanRunner.isRunning()) {
+                        LoreUtilsClient.ingenuityPlanRunner.stop();
+                    }
+
+                    LoreUtilsClient.ingenuityPlanRunner.loadPlan(path);
+                    LoreUtilsClient.ingenuityPlanRunner.start();
+                    return Command.SINGLE_SUCCESS;
+                });
+
+        var ingenuityRoot = literal("ingenuity")
+                .then(ingenuityCalibrateCmd)
+                .then(ingenuityStopCmd)
+                .then(ingenuityStatusCmd)
+                .then(ingenuityResetCmd)
+                .then(ingenuitySolveCmd);
+
         dispatcher.register(
                 literal("lore")
                         .executes(ctx -> {
@@ -439,10 +522,12 @@ public class ClientCommands {
                             info("&7/lore explain list|show|create");
                             info("&7/lore pathway builder start|add|finish|cancel");
                             info("&7/lore pathway list|render|enable|disable");
+                            info("&7/lore ingenuity calibrate|stop|status|reset|solve");
                             return Command.SINGLE_SUCCESS;
                         })
                         .then(explainRoot)
                         .then(pathwayRoot)
+                        .then(ingenuityRoot)
         );
     }
 }

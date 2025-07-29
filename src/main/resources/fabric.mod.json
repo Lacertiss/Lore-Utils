@@ -3,9 +3,13 @@
 	"id": "loreutils",
 	"version": "${version}",
 	"name": "Lore Utils",
-	"description": "Life quality improvements for PVPLegacy Lore \nSpecial thanks to Crafty & Phoenix for the helping with the creation of this mod.",
+	"description": "Life quality improvements for PVPLegacy Lore",
 	"authors": [
 		"Lacertis"
+	],
+	"contributors": [
+		"Crafty",
+		"Phoenix"
 	],
 	"contact": {
 		"sources": "https://github.com/Lacertiss/Lore-Utils"

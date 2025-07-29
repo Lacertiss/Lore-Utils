@@ -1,6 +1,6 @@
-package de.lacertis.loreutils.solver;
+package de.lacertis.loreutils.solver.lightsout;
 
-public enum LightsOutCoords {
+public enum Coords {
     LIGHTS_OUT_COORD_1(-11259.5, 34, 12683.5),
     LIGHTS_OUT_COORD_2(-11259.5, 34, 12669.5),
     LIGHTS_OUT_COORD_3(-11259.5, 34, 12655.5),
@@ -48,7 +48,7 @@ public enum LightsOutCoords {
     private final double y;
     private final double z;
 
-    LightsOutCoords(double x, double y, double z) {
+    Coords(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;

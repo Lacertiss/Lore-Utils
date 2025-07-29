@@ -1,4 +1,4 @@
-package de.lacertis.loreutils.solver;
+package de.lacertis.loreutils.solver.lightsout;
 
 import de.lacertis.loreutils.EspRender;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -12,28 +12,28 @@ import java.util.Set;
 
 public class RenderSolvedLightsOut {
 
-    public static Map<LightsOutSolver.Pos, LightsOutCoords> createMapping() {
-        LightsOutCoords[] coords = LightsOutCoords.values();
-        Map<LightsOutSolver.Pos, LightsOutCoords> mapping = new HashMap<>();
+    public static Map<Solver.Pos, Coords> createMapping() {
+        Coords[] coords = Coords.values();
+        Map<Solver.Pos, Coords> mapping = new HashMap<>();
         int idx = 0;
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                if (LightsOutInput.triggerLayout[x][y]) {
-                    mapping.put(new LightsOutSolver.Pos(x, y), coords[idx++]);
+                if (Input.triggerLayout[x][y]) {
+                    mapping.put(new Solver.Pos(x, y), coords[idx++]);
                 }
             }
         }
         return mapping;
     }
 
-    public static void renderSolution(List<LightsOutSolver.Pos> positions) {
-        Map<LightsOutSolver.Pos, LightsOutCoords> mapping = createMapping();
+    public static void renderSolution(List<Solver.Pos> positions) {
+        Map<Solver.Pos, Coords> mapping = createMapping();
         Set<BlockPos> highlights = new HashSet<>();
 
         EspRender.unregisterAllPositions();
 
-        for (LightsOutSolver.Pos move : positions) {
-            LightsOutCoords coord = mapping.get(move);
+        for (Solver.Pos move : positions) {
+            Coords coord = mapping.get(move);
             if (coord != null) {
                 BlockPos pos = new BlockPos((int) coord.getX(), (int) coord.getY() + 1, (int) coord.getZ());
                 EspRender.registerPosition(pos);

@@ -1,8 +1,8 @@
-package de.lacertis.loreutils.solver;
+package de.lacertis.loreutils.solver.lightsout;
 
 import java.util.*;
 
-public class LightsOutSolver {
+public class Solver {
 
     public record Pos(int x, int y) {}
 
@@ -82,7 +82,7 @@ public class LightsOutSolver {
         int[][] targetGrid = new int[7][7];
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                targetGrid[x][y] = LightsOutInput.triggerLayout[x][y] ? 1 : 0;
+                targetGrid[x][y] = Input.triggerLayout[x][y] ? 1 : 0;
             }
         }
         return solveFullGrid(grid, targetGrid);
@@ -92,7 +92,7 @@ public class LightsOutSolver {
         int[][] targetGrid = new int[7][7];
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
-                targetGrid[x][y] = LightsOutInput.triggerLayout[x][y] ? 0 : 0;
+                targetGrid[x][y] = Input.triggerLayout[x][y] ? 0 : 0;
             }
         }
         return solveFullGrid(grid, targetGrid);

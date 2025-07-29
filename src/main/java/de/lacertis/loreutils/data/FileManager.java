@@ -7,6 +7,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.lang.reflect.Type;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -95,6 +96,52 @@ public class FileManager {
         T data = loadJson(name, type);
         editor.accept(data);
         saveJson(name, data);
+    }
+
+    public static <T> T loadJsonInSubfolder(String subFolder, String name, Type type) throws IOException {
+        Path folder = CONFIG_DIR.resolve(subFolder);
+        Path file = folder.resolve(name.endsWith(".json") ? name : name + ".json");
+
+        if (Files.notExists(file)) {
+            Files.createDirectories(folder);
+            T defaultObj = GSON.fromJson("{}", type);
+            try (Writer writer = Files.newBufferedWriter(file, StandardOpenOption.CREATE_NEW)) {
+                GSON.toJson(defaultObj, type, writer);
+            }
+            return defaultObj;
+        }
+
+        try (Reader reader = Files.newBufferedReader(file)) {
+            return GSON.fromJson(reader, type);
+        }
+    }
+
+    public static void saveJsonInSubfolder(String subFolder, String name, Object obj) throws IOException {
+        Path folder = CONFIG_DIR.resolve(subFolder);
+        Files.createDirectories(folder);
+        Path file = folder.resolve(name.endsWith(".json") ? name : name + ".json");
+        try (Writer writer = Files.newBufferedWriter(file, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
+            GSON.toJson(obj, writer);
+        }
+    }
+
+    public static boolean deleteJsonInSubfolder(String subFolder, String name) throws IOException {
+        Path folder = CONFIG_DIR.resolve(subFolder);
+        Path file = folder.resolve(name.endsWith(".json") ? name : name + ".json");
+        return Files.deleteIfExists(file);
+    }
+
+    public static List<String> listAllJsonsInSubfolder(String subFolder) throws IOException {
+        Path folder = CONFIG_DIR.resolve(subFolder);
+        List<String> result = new ArrayList<>();
+        if (!Files.isDirectory(folder)) return result;
+
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(folder, "*.json")) {
+            for (Path path : stream) {
+                result.add(path.getFileName().toString());
+            }
+        }
+        return result;
     }
 
     private static Path getFilePath(String name) {
