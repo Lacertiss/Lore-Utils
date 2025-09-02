@@ -30,10 +30,10 @@ public class IngenuityInput {
         BlockPos junction = toBlockPos(slotToCoords.get(slot));
         BlockPos[] neighbors = neighbors(junction);
 
-        boolean n = isLodestone(world, neighbors[0]); // North
-        boolean e = isLodestone(world, neighbors[1]); // East
-        boolean s = isLodestone(world, neighbors[2]); // South
-        boolean w = isLodestone(world, neighbors[3]); // West
+        boolean n = isLodestone(world, neighbors[0]);
+        boolean e = isLodestone(world, neighbors[1]);
+        boolean s = isLodestone(world, neighbors[2]);
+        boolean w = isLodestone(world, neighbors[3]);
 
         return mapTile(n, e, s, w, slot, junction);
     }
@@ -91,10 +91,10 @@ public class IngenuityInput {
 
     private BlockPos[] neighbors(BlockPos junction) {
         return new BlockPos[] {
-            junction.add(0, 0, -1), // North
-            junction.add(1, 0, 0), // East
-            junction.add(0, 0, 1), // South
-            junction.add(-1, 0, 0) // West
+            junction.add(0, 0, -1),
+            junction.add(1, 0, 0),
+            junction.add(0, 0, 1),
+            junction.add(-1, 0, 0)
         };
     }
 
@@ -109,7 +109,6 @@ public class IngenuityInput {
         if (n && s && !e && !w) {
             return Tile.NORTHSOUTH;
         }
-        //--
         if (e && n && !s && !w) {
             return Tile.EASTNORTH;
         }

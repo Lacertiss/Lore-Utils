@@ -1,5 +1,6 @@
 {
   "text.autoconfig.loreutils.title": "LoreUtils Configuration",
+
   "text.autoconfig.loreutils.category.appearance": "Appearance",
   "text.autoconfig.loreutils.option.primaryColor": "Primary Color",
   "text.autoconfig.loreutils.option.primaryColor.@Tooltip": "Choose the primary color for mod",
@@ -18,5 +19,23 @@
   "text.autoconfig.loreutils.option.ingenuityTip": "Ingenuity Tips",
   "text.autoconfig.loreutils.option.ingenuityTip.@Tooltip": "Choose whether to show Ingenuity tips.",
   "text.autoconfig.loreutils.option.ingenuityDebug": "Debug Mode",
-  "text.autoconfig.loreutils.option.ingenuityDebug.@Tooltip": "Choose whether to enable debug mode for Ingenuity. This will show additional information to help solve issues/bugs."
+  "text.autoconfig.loreutils.option.ingenuityDebug.@Tooltip": "Choose whether to enable debug mode for Ingenuity. This will show additional information to help solve issues/bugs.",
+
+  "text.autoconfig.loreutils.category.lectern": "Lectern",
+  "text.autoconfig.loreutils.option.defaultLecternAction": "Default Action",
+  "text.autoconfig.loreutils.option.defaultLecternAction.@Tooltip": "What the Lectern \"Copy\" button does by default: copy the current page or all pages.",
+  "text.autoconfig.loreutils.option.defaultLecternMode": "Default Mode",
+  "text.autoconfig.loreutils.option.defaultLecternMode.@Tooltip": "RAW keeps § codes and Unicode. FORMATTED looks like the lectern view.",
+  "text.autoconfig.loreutils.option.includeTitleAuthor": "Include Title & Author",
+  "text.autoconfig.loreutils.option.includeTitleAuthor.@Tooltip": "Prepend the book's title and author to the exported text.",
+  "text.autoconfig.loreutils.option.numberPages": "Number Pages",
+  "text.autoconfig.loreutils.option.numberPages.@Tooltip": "Insert visible page numbers into the export.",
+  "text.autoconfig.loreutils.option.pageSeparator": "Page Separator",
+  "text.autoconfig.loreutils.option.pageSeparator.@Tooltip": "String inserted between pages when copying more than one page.",
+  "text.autoconfig.loreutils.option.formattedKeepPageBreaks": "Keep Page Breaks in FORMATTED",
+  "text.autoconfig.loreutils.option.formattedKeepPageBreaks.@Tooltip": "Preserve visual page breaks when exporting in FORMATTED mode.",
+  "text.autoconfig.loreutils.option.exportToFile": "Also Save to File",
+  "text.autoconfig.loreutils.option.exportToFile.@Tooltip": "Additionally save the export under config/loreutils/books/.",
+  "text.autoconfig.loreutils.option.filePattern": "Filename Pattern",
+  "text.autoconfig.loreutils.option.filePattern.@Tooltip": "e.g. {title}-{author}-{sha1}.{ext} — tokens are replaced when saving."
 }

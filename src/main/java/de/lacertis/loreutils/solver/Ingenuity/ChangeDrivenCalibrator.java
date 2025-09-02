@@ -24,9 +24,9 @@ public final class ChangeDrivenCalibrator {
 
     private void onChange(Tile[] before, Tile[] after) {
         Tile[] beforeCopy = Arrays.copyOf(before, before.length);
-        Tile[] afterCopy  = Arrays.copyOf(after,  after.length);
+        Tile[] afterCopy = Arrays.copyOf(after,  after.length);
         String hBefore = IngenuityDebug.hash(beforeCopy);
-        String hAfter  = IngenuityDebug.hash(afterCopy);
+        String hAfter = IngenuityDebug.hash(afterCopy);
 
         EnumSet<Slot> delta = DeltaUtil.diff(beforeCopy, afterCopy);
         Move move = DeltaUtil.classify(delta);
@@ -78,8 +78,7 @@ public final class ChangeDrivenCalibrator {
             boolean ok = PermutationsStorage.runSanity(d);
 
             if (IngenuityDebug.enabled()) {
-                IngenuityDebug.chat("sanity E4=%s W4=%s L2=%s stale=%s",
-                    d.sanity.east4IsId, d.sanity.west4IsId, d.sanity.lectern2IsId, d.stale);
+                IngenuityDebug.chat("sanity E4=%s W4=%s L2=%s stale=%s", d.sanity.east4IsId, d.sanity.west4IsId, d.sanity.lectern2IsId, d.stale);
             }
 
             if (ok && d.perms != null && d.perms.EAST != null && d.perms.WEST != null && d.perms.LECTERN != null) {

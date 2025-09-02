@@ -18,12 +18,12 @@ public final class DeltaUtil {
     public static Move classify(EnumSet<Slot> delta) {
         if (delta == null || delta.size() < MIN_DELTA_SIZE) return Move.UNKNOWN;
 
-        EnumSet<Slot> right  = EnumSet.of(Slot.EASTNORTH, Slot.EASTEAST, Slot.EASTSOUTH, Slot.EASTWEST);
-        EnumSet<Slot> left   = EnumSet.of(Slot.WESTNORTH, Slot.WESTWEST, Slot.WESTSOUTH, Slot.WESTEAST);
+        EnumSet<Slot> right = EnumSet.of(Slot.EASTNORTH, Slot.EASTEAST, Slot.EASTSOUTH, Slot.EASTWEST);
+        EnumSet<Slot> left = EnumSet.of(Slot.WESTNORTH, Slot.WESTWEST, Slot.WESTSOUTH, Slot.WESTEAST);
         EnumSet<Slot> lectern = EnumSet.of(Slot.WESTWEST, Slot.EASTWEST, Slot.WESTEAST, Slot.EASTEAST);
 
-        if (right.containsAll(delta))   return Move.EAST;
-        if (left.containsAll(delta))    return Move.WEST;
+        if (right.containsAll(delta)) return Move.EAST;
+        if (left.containsAll(delta)) return Move.WEST;
         if (lectern.containsAll(delta)) return Move.LECTERN;
         return Move.UNKNOWN;
     }

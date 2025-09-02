@@ -15,12 +15,12 @@ public class IngenuityDebug {
 
     public static void chat(String fmt, Object... args) {
         if (!enabled()) return;
-        MessageManager.sendChatColored("&b[Ingenuity]&7 " + String.format(fmt, args));
+        MessageManager.sendChatColored("&b[IngenuityDebug]&7 " + String.format(fmt, args));
     }
 
     public static void bar(String fmt, Object... args) {
         if (!enabled()) return;
-        MessageManager.sendActionBarColored("&b[Ingenuity]&7 " + String.format(fmt, args));
+        MessageManager.sendActionBarColored("&b[IngenuityDebug]&7 " + String.format(fmt, args));
     }
 
     public static String hash(Tile[] snap) {

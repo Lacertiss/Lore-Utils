@@ -1,6 +1,5 @@
 package de.lacertis.loreutils;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import de.lacertis.loreutils.config.ModConfig;
 import de.lacertis.loreutils.config.ConfigTranslator;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -45,7 +44,6 @@ public class EspRender {
             if (matrices == null) return;
 
             VertexConsumerProvider consumers = ctx.consumers();
-            RenderSystem.disableDepthTest();
             matrices.push();
             matrices.translate(-camX, -camY, -camZ);
 
@@ -60,7 +58,6 @@ public class EspRender {
             }
 
             matrices.pop();
-            RenderSystem.enableDepthTest();
         });
         initialized = true;
     }

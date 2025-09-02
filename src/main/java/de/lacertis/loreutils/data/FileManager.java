@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -146,5 +147,36 @@ public class FileManager {
 
     private static Path getFilePath(String name) {
         return CONFIG_DIR.resolve(name.endsWith(".json") ? name : name + ".json");
+    }
+
+    /**
+     * Save a UTF-8 text file into a subfolder under config/loreutils.
+     * If name has no extension, use ".txt".
+     */
+    public static void saveTextInSubfolder(String subFolder, String name, String content) throws IOException {
+        Path folder = CONFIG_DIR.resolve(subFolder);
+        Files.createDirectories(folder);
+        String fileName = name.contains(".") ? name : name + ".txt";
+        Path file = folder.resolve(fileName);
+        Files.writeString(file, content == null ? "" : content, StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+    }
+
+    /**
+     * Sanitize a file name by removing path separators and trimming.
+     */
+    public static String sanitizeFileName(String s) {
+        if (s == null) return "";
+        String cleaned = s.replace('/', '_')
+                .replace('\\', '_')
+                .replace(':', '_')
+                .replace('*', '_')
+                .replace('?', '_')
+                .replace('"', '_')
+                .replace('<', '_')
+                .replace('>', '_')
+                .replace('|', '_');
+        cleaned = cleaned.trim().replaceAll("\\s+", " ");
+        return cleaned;
     }
 }

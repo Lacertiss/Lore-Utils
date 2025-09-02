@@ -15,6 +15,7 @@ import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.math.Box;
 import org.apache.logging.log4j.LogManager;
@@ -66,6 +67,14 @@ public class LoreUtilsClient implements ClientModInitializer {
             }
             if (ingenuityPlanRunner.isRunning()) {
                 ingenuityPlanRunner.tick();
+            }
+        });
+
+        // Attach Lectern "Copy" button via Fabric Screen Events
+        ScreenEvents.AFTER_INIT.register((client, screen, width, height) -> {
+            try {
+                de.lacertis.loreutils.lectern.ui.LecternCopyButton.attachTo(screen);
+            } catch (Throwable ignored) {
             }
         });
     }
